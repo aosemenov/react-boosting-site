@@ -4,10 +4,20 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const htmlPlugin = new HtmlWebpackPlugin({
   favicon: path.resolve(__dirname, 'public', 'favicon.ico'),
   template: path.resolve(__dirname, 'public', 'index.html'),
+});
+
+const copyWebpackPlugin = new CopyWebpackPlugin({
+  patterns: [
+    {
+      from: path.resolve(__dirname, 'public', 'media'),
+      to: 'media'
+    }
+  ]
 });
 
 const dotEnv = new Dotenv()
@@ -80,10 +90,10 @@ const config = {
     historyApiFallback: true,
     port,
   },
-  // TODO: добавить реакт в глобальную область видимости - ошибка импорта
   plugins: [
     htmlPlugin,
     dotEnv,
+    copyWebpackPlugin,
     isDevelopment && new ReactRefreshWebpackPlugin(),
   ].filter(Boolean),
 };

@@ -1,16 +1,24 @@
 import { createTheme, Theme, ThemeOptions } from '@mui/material/styles'
 import { MuiTypography } from '@app/styles/components/MuiTypography'
 import { MuiButton } from './components/MuiButton'
-import { basic } from '@app/styles/basic'
-
 
 export const mainTheme: Theme = createTheme(<ThemeOptions>{
+  breakpoints: {
+    values: {
+      xs: 560,
+      sm: 768,
+      md: 1280,
+      lg: 1440,
+      xl: 1920,
+    },
+  },
   palette: {
     primary: {
-      main: '#F33041',
+      main: '#FC0344',
     },
     secondary: {
-      main: '#6C6C6C',
+      main: '#1F2326',
+      darkest: '#0B0B0B'
     },
     customGray: {
       gray1: '#EDEDED',
@@ -37,12 +45,12 @@ export const mainTheme: Theme = createTheme(<ThemeOptions>{
       white: '#FFFFFF',
     },
     text: {
-      primary: '#333333',
+      primary: '#1F2326',
       secondary: '#6C6C6C',
     },
   },
   typography: {
-    fontFamily: ['Lato', 'sans-serif'].join(','),
+    fontFamily: ['Poppins', 'sans-serif'].join(','),
     h1: {
       fontSize: '40px',
       fontStyle: 'normal',
@@ -67,7 +75,7 @@ export const mainTheme: Theme = createTheme(<ThemeOptions>{
     body1: {
       fontSize: '16px',
       fontStyle: 'normal',
-      fontWeight: 400,
+      fontWeight: 500,
       lineHeight: '20px',
       color: '#333333',
     },

@@ -1,1 +1,1 @@
-export { HeaderComponent as Header } from './ui/Wrapper'
+export { HeaderComponent as Header } from './ui/HeaderComponent'

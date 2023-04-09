@@ -1,18 +1,18 @@
-import React, {FC} from 'react'
+import React, { FC } from 'react'
 
 import styled from '@mui/material/styles/styled'
 
-import {Box, BoxProps} from '@mui/material'
+import { Box, BoxProps } from '@mui/material'
 
-const Wrapper = styled(Box)<BoxProps>(({theme}) => ({
-    display: 'flex',
-    flexDirection: 'column',
+const Wrapper = styled(Box)<BoxProps>(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
 }))
 
-export const AuthForm: FC = () => {
-    return (
-        <Wrapper>
+export const AuthForm: FC<{}> = () => {
+  return (
+    <Wrapper>
 
-        </Wrapper>
-    )
+    </Wrapper>
+  )
 }
