@@ -14,10 +14,6 @@ export const Wrapper = styled(Box)<BoxProps>(
 export const BannerComponent: FC<{}> = () => (
   <Wrapper>
     <Box>
-      <Typography>
-        your new way
-        to the top
-      </Typography>
     </Box>
     <Box
       position="absolute"
@@ -25,8 +21,7 @@ export const BannerComponent: FC<{}> = () => (
       right="0"
       height="850px"
     >
-      <video style={{ width: '100%', height: '100%', opacity: '.15', display: 'none' }} muted autoPlay loop> // TODO:
-        now display: none
+      <video style={{ width: '100%', height: '100%', opacity: '.15' }} muted autoPlay loop> // TODO:
         <source type="video/mp4" src="../pages/main/layout/media/voy_f.mp4"/>
       </video>
     </Box>

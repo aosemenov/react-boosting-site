@@ -5,11 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline'
 import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import { Box } from '@mui/material'
 
-import { AxiosInstanceProvider } from '@shared/api'
-import { MainPage } from '@pages/main'
-import { paths } from '@app/paths/paths'
-
 import { mainTheme } from './styles/mainTheme'
+import { routesConfig } from '@app/routersConfig'
+import { RoutePage } from '@pages/routePage'
 
 export const App = () => {
   return (
@@ -25,7 +23,11 @@ export const App = () => {
         }}
       >
         <Routes>
-          <Route path={paths.root} element={<MainPage/>}/>
+          {routesConfig && routesConfig.map(v =>
+            <Route key={v.alias} path={v.path} element={
+               <RoutePage alias={v.alias} title={v.title} />
+            }/>
+          )}
         </Routes>
       </Box>
     </ThemeProvider>

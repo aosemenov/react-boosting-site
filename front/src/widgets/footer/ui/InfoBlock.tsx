@@ -38,9 +38,9 @@ export const InfoBlock: FC<IInfoBlock> = ({
           {title}
         </Typography>
       </Box>
-      {paths && paths.map((path) => {
+      {paths && paths.map((path, index) => {
         return (
-          <WrapperItem sx={{ mb: '10px' }}>
+          <WrapperItem key={index} sx={{ mb: '10px' }}>
             <Link to={path.link} component={NavLink}>
               <Typography variant="body1">{path.name}</Typography>
             </Link>

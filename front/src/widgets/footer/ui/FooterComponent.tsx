@@ -52,7 +52,7 @@ export const CopyrightWrapper = styled(Box)<BoxProps>(
     alignItems: 'center',
     justifyContent: 'center',
     height: '40px',
-    backgroundColor: 'secondary.main',
+    backgroundColor: theme.palette.secondary.main,
     width: '100%',
   }),
 )

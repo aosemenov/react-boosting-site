@@ -5,6 +5,7 @@ import { MuiButton } from './components/MuiButton'
 export const mainTheme: Theme = createTheme(<ThemeOptions>{
   breakpoints: {
     values: {
+      xx: 320,
       xs: 560,
       sm: 768,
       md: 1280,
@@ -108,6 +109,15 @@ export const mainTheme: Theme = createTheme(<ThemeOptions>{
 })
 
 declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xx: true;
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+  }
+
   interface PaletteColor {
     darkest?: string
     lightest?: string
