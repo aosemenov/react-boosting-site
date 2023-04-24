@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BoostCSController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('/get-user/{id}', [UserController::class, 'getUser']);
+
+
+Route::get('/boosting/cs-rank/{from}/{to}', [BoostCSController::class, 'calcRank']);
+Route::get('/boosting/cs-elo/{from}/{to}', [BoostCSController::class, 'calcElo']);
+
+//Route::post('/boosting/vr/rank/{from}/{to}', [BoostCSController::class, 'calcRank']);
+//Route::post('/boosting/vr/elo/{from}/{to}', [BoostCSController::class, 'calcElo']);
