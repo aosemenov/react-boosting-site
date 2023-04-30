@@ -4,4 +4,4 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class boost_cs extends Model { }
+class BoostVr extends Model { }
