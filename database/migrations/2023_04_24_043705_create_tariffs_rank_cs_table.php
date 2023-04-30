@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('TariffsRankCS', function(Blueprint $table) {
+        Schema::create('tariffs_rank_cs', function(Blueprint $table) {
             $table->id();
             $table->integer('rank_from');
             $table->integer('rank_to');
@@ -17,6 +17,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('TariffsRankCS');
+        Schema::dropIfExists('tariffs_rank_cs');
     }
 };
