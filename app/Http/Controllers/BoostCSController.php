@@ -27,13 +27,12 @@ class BoostCSController extends Controller
         $i = $data['rank_from'];
 
         $ranks = TariffsRankCs::all();
-
         foreach ($ranks as $rank) {
             if ($i >= $data['rank_to']) {
                 break;
             }
 
-            if ($i >= $rank->rank_from && $i <= $rank->rank_to) {
+            while ($i >= $rank->rank_from && $i <= $rank->rank_to && $i < $data['rank_to']) {
                 $sum += $rank->price;
                 $i++;
             }
@@ -56,12 +55,12 @@ class BoostCSController extends Controller
 
         foreach ($elos as $elo) {
             while ($i <= $elo->elo_to && $i >= $elo->elo_from && $i < $data['elo_to']) {
-                $sum += round($elo->price / self::MIN_ELO, 1);
+                $sum += $elo->price / self::MIN_ELO;
                 $i++;
             }
         }
 
-        return $this->success(['sum' => $sum]);
+        return $this->success(['sum' => round($sum, 1)]);
     }
 
 }
