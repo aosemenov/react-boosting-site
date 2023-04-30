@@ -21,14 +21,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/get-user/{id}', [UserController::class, 'getUser']);
 
 
-Route::get('/boosting/cs-rank', [BoostCSController::class, 'calcRank']);
-Route::get('/boosting/cs-elo/{from}/{to}', [BoostCSController::class, 'calcElo']);
+Route::middleware('json.response')->group(function() {
+
+    Route::post('/get-user/{id}', [UserController::class, 'getUser']);
+
+    Route::get('/boosting/cs-rank', [BoostCSController::class, 'calcRank']);
+    Route::get('/boosting/cs-elo', [BoostCSController::class, 'calcElo']);
+
+
+});
 
 
 
 
-//Route::post('/boosting/vr/rank/{from}/{to}', [BoostCSController::class, 'calcRank']);
-//Route::post('/boosting/vr/elo/{from}/{to}', [BoostCSController::class, 'calcElo']);
+
