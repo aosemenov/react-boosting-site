@@ -6,6 +6,7 @@ use App\Http\Requests\Boosting\BoostingEloCsRequest;
 use App\Http\Requests\Boosting\BoostingRankCsRequest;
 use App\Models\TariffsEloCs;
 use App\Models\TariffsRankCs;
+use Illuminate\Support\Facades\Cache;
 
 class BoostCSController extends Controller
 {
@@ -26,7 +27,10 @@ class BoostCSController extends Controller
         $sum = 0.0;
         $i = $data['rank_from'];
 
-        $ranks = TariffsRankCs::all();
+        $ranks = Cache::remember('tariffs_ranks_cs', 86400, function () {
+            return TariffsRankCs::all();
+        });
+
         foreach ($ranks as $rank) {
             if ($i >= $data['rank_to']) {
                 break;
@@ -51,7 +55,9 @@ class BoostCSController extends Controller
         $sum = 0.0;
         $i = $data['elo_from'];
 
-        $elos = TariffsEloCs::all();
+        $elos = Cache::remember('tariffs_elos_cs', 86400, function () {
+            return TariffsEloCs::all();
+        });
 
         foreach ($elos as $elo) {
             while ($i <= $elo->elo_to && $i >= $elo->elo_from && $i < $data['elo_to']) {
@@ -63,4 +69,23 @@ class BoostCSController extends Controller
         return $this->success(['sum' => round($sum, 1)]);
     }
 
+    public function getRankInfo()
+    {
+        $ranks = Cache::remember('tariffs_ranks_cs', 86400, function () {
+            return TariffsRankCs::all();
+        },);
+        $rank_from = $ranks->sortBy('rank_from')->first()->rank_from;
+        $rank_to = $ranks->sortByDesc('rank_from')->first()->rank_to;
+        return $this->success(['min-rank' => $rank_from, 'max-rank' => $rank_to]);
+    }
+
+    public function getEloInfo()
+    {
+        $elos = Cache::remember('tariffs_elos_cs', 86400, function () {
+            return TariffsEloCs::all();
+        });
+        $elo_from = $elos->sortBy('elo_from')->first()->elo_from;
+        $elo_to = $elos->sortByDesc('elo_from')->first()->elo_to;
+        return $this->success(['min-elo' => $elo_from, 'max-elo' => $elo_to]);
+    }
 }

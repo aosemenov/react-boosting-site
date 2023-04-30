@@ -27,8 +27,11 @@ Route::middleware('json.response')->group(function() {
 
     Route::post('/get-user/{id}', [UserController::class, 'getUser']);
 
-    Route::get('/boosting/cs-rank', [BoostCSController::class, 'calcRank']);
-    Route::get('/boosting/cs-elo', [BoostCSController::class, 'calcElo']);
+    Route::get('/boosting/calc/cs-rank', [BoostCSController::class, 'calcRank']);
+    Route::get('/boosting/calc/cs-elo', [BoostCSController::class, 'calcElo']);
+
+    Route::get('/boosting/get/cs-rank-info', [BoostCSController::class, 'getRankInfo']);
+    Route::get('/boosting/get/cs-elo-info', [BoostCSController::class, 'getEloInfo']);
 
 
 });
