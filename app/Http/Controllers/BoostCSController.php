@@ -150,6 +150,7 @@ class BoostCSController extends Controller
 
     public function calcRank(int $from, int $to)
     {
+//        $
 //        $this->validate();
         $sum = 0.0;
 
