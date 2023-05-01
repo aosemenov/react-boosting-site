@@ -24,7 +24,7 @@ export const LayoutWrapper = styled(Box)<BoxProps>(
 )
 
 export const ContentWrapper = styled(Box)<BoxProps>(
-  () => ({
+  ({ theme }) => ({
     position: 'relative',
     flexGrow: 1,
     backgroundImage: 'url("/media/images/bg-sprite-1.svg")',
@@ -36,8 +36,8 @@ export const ContentWrapper = styled(Box)<BoxProps>(
       right: 0,
       bottom: 0,
       content: '""',
-      background: 'black',
-      opacity: '.4',
+      background: theme.palette.common.black,
+      opacity: '.6',
     },
   }),
 )

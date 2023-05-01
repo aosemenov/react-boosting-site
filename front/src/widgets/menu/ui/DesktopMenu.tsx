@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import styled from '@mui/material/styles/styled'
-import { Box, BoxProps, Button,  Typography } from '@mui/material'
+import { Box, BoxProps, Button, Typography } from '@mui/material'
 
 import { menuItemPopoverModel } from '@widgets/menu/model/menuPopoverModel'
 import { usePushToPage } from '@shared/hooks/useToPage'

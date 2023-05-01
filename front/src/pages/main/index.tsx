@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { useDocumentTitle } from '@shared/hooks/useDocumentTitle'
 import styled from '@mui/material/styles/styled'
 import { Box, BoxProps } from '@mui/material'
 import { Banner } from '@widgets/banner'
+import { Promo } from '@widgets/promo'
 
 export const Flex = styled(Box)<BoxProps>(
   () => ({
@@ -18,6 +18,7 @@ export const MainPage = () => {
   return (
       <Flex>
         <Banner/>
+        <Promo />
       </Flex>
   )
 }
