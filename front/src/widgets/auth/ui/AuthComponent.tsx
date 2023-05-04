@@ -9,10 +9,13 @@ const Wrapper = styled(Box)<BoxProps>(({ theme }) => ({
   flexDirection: 'column',
 }))
 
-export const AuthForm: FC<{}> = () => {
+export const AuthComponent: FC<{}> = () => {
+  // Логика формы авторизации страницы...
+
   return (
     <Wrapper>
-
+      Форма авторизации
+      Форма регистрации
     </Wrapper>
   )
 }
