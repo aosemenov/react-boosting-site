@@ -58,7 +58,7 @@ export const MuiButton = {
       userSelect: 'none',
       outline: 'none',
       border: '3px solid white',
-      background: '#FC0344',
+      background: 'transparent',
       [`@media (min-width: 768px)`]: {
         padding: '8px 28px',
       },

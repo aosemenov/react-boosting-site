@@ -105,8 +105,9 @@ export const FooterComponent: FC<{}> = () => (
       </Container>
     </Wrapper>
     <CopyrightWrapper>
-      <Typography variant="body2" sx={{ color: 'white', opacity: .3 }}>© 2022-2023 BigBoost - All Rights
-        Reserved</Typography>
+      <Typography variant="body2" sx={{ color: 'white', opacity: .4 }}>
+        © 2022-2023 bigboost.pro - All Rights Reserved
+      </Typography>
     </CopyrightWrapper>
   </>
 )

@@ -1,14 +1,6 @@
 import React, { FC, useState } from 'react'
 import styled from '@mui/material/styles/styled'
 import { Box, Button, Drawer, Typography } from '@mui/material'
-import List from '@mui/material/List'
-import Divider from '@mui/material/Divider'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 
@@ -18,11 +10,10 @@ export const StyledBurger = styled(Box)<any>(
     flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '36px',
-    height: '36px',
+    width: '40px',
+    height: '40px',
     cursor: 'pointer',
-    borderRadius: '8px',
-    background: theme.palette.common.white,
+    color: theme.palette.common.white,
   }),
 )
 
@@ -34,6 +25,16 @@ export const StyledDrawer = styled(Drawer)<any>(
       borderRadius: '24px 24px 0 0',
       background: theme.palette.common.white,
     },
+    '.menu-mobile': {
+      display: 'flex',
+      flexDirection: 'column',
+      '&__item': {
+        marginBottom: '12px',
+        '&:last-of-type': {
+          margin: 0,
+        },
+      },
+    }
   }),
 )
 
@@ -49,36 +50,30 @@ export const MobileMenu: FC<{}> = () => {
       <StyledBurger onClick={() => {
         toggleDrawer(!state)
       }}>
-        {state ? <CloseIcon/> : <MenuIcon/>}
+        {state ? <CloseIcon sx={{ width: 40, height: 40}}/> : <MenuIcon sx={{ width: 40, height: 40}}/>}
       </StyledBurger>
       <StyledDrawer
         anchor={'bottom'}
         open={state}
         onClose={() => toggleDrawer(false)}
       >
-        <Typography variant='h2'>
-          SERVICES
-        </Typography>
-        <Typography variant='body1'>
-          Accounts
-        </Typography>
-        <Typography variant='body1'>
-          Boosting
-        </Typography>
-        <Typography variant='body1'>
-          Coaching
-        </Typography>
-        <Typography variant='h2'>
-          OTHERS
-        </Typography>
-        <Typography variant='body1'>
-          Contacts
-        </Typography>
-        <Button
-          variant="outlined"
-        >
-          <Typography>Client area</Typography>
-        </Button>
+        <Box className="menu-mobile">
+          <Typography className="menu-mobile__item" variant='menu1'>
+            Accounts
+          </Typography>
+          <Typography className="menu-mobile__item" variant='menu1'>
+            Boosting
+          </Typography>
+          <Typography className="menu-mobile__item" variant='menu1'>
+            Coaching
+          </Typography>
+          <Typography className="menu-mobile__item" variant='menu1'>
+            ClientArea
+          </Typography>
+          <Typography className="menu-mobile__item" variant='menu1'>
+            Contacts
+          </Typography>
+        </Box>
       </StyledDrawer>
     </>
   )

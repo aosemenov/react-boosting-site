@@ -9,6 +9,9 @@ import { mainTheme } from './styles/mainTheme'
 import { routesConfig } from '@app/routersConfig'
 import { RoutePage } from '@pages/routePage'
 
+import '@fontsource/fugaz-one'
+import '@fontsource/poppins'
+
 export const App = () => {
   return (
     <ThemeProvider theme={mainTheme}>

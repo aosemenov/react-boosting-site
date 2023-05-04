@@ -15,5 +15,4 @@ export const useScrollTo = (shouldScroll: boolean)=> {
     }, [shouldScroll])
 
     return elToScroll
-
 }

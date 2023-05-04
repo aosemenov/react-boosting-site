@@ -1,6 +1,7 @@
 import { createTheme, Theme, ThemeOptions } from '@mui/material/styles'
 import { MuiTypography } from '@app/styles/components/MuiTypography'
 import { MuiButton } from './components/MuiButton'
+import { MuiRating } from '@app/styles/components/MuiRating'
 
 export const mainTheme: Theme = createTheme(<ThemeOptions>{
   breakpoints: {
@@ -18,12 +19,15 @@ export const mainTheme: Theme = createTheme(<ThemeOptions>{
       main: '#FC0344',
     },
     secondary: {
+      light: 'rgba(11, 11, 11, 0.6)',
       main: '#1F2326',
       darkest: '#0B0B0B'
     },
     customGray: {
       gray1: '#EDEDED',
       gray2: '#AFAFAF',
+      mirage: 'rgba(26, 38, 50, 0.7)',
+      mirage2: 'rgba(26, 38, 50, 1)',
     },
     error: {
       main: '#F62434',
@@ -60,24 +64,34 @@ export const mainTheme: Theme = createTheme(<ThemeOptions>{
       color: '#333333',
     },
     h2: {
-      fontSize: '20px',
-      fontStyle: 'normal',
-      fontWeight: 700,
-      lineHeight: '24px',
-      color: '#333333',
+      fontSize: '40px',
+      fontWeight: 400,
+      lineHeight: '44px',
+      color: 'white'
     },
     h3: {
-      fontSize: '12px',
-      fontStyle: 'normal',
-      fontWeight: 700,
-      lineHeight: '20px',
-      color: '#6C6C6C',
+      fontSize: '36px',
+      fontWeight: 400,
+      lineHeight: '42px',
+      color: 'white'
+    },
+    h4: {
+      fontSize: '28px',
+      fontWeight: 400,
+      lineHeight: '32px',
+      color: 'white'
+    },
+    h5: {
+      fontSize: '24px',
+      fontWeight: 400,
+      lineHeight: '28px',
+      color: 'white'
     },
     body1: {
-      fontSize: '16px',
+      fontSize: '18px',
       fontStyle: 'normal',
       fontWeight: 500,
-      lineHeight: '20px',
+      lineHeight: '24px',
       color: '#333333',
     },
     body2: {
@@ -88,10 +102,10 @@ export const mainTheme: Theme = createTheme(<ThemeOptions>{
       color: '#333333',
     },
     menu1: {
-      fontSize: '13px',
+      fontSize: '24px',
       fontStyle: 'normal',
       fontWeight: 400,
-      lineHeight: '16px',
+      lineHeight: '30px',
       color: '#333333',
     },
     menu2: {
@@ -105,6 +119,7 @@ export const mainTheme: Theme = createTheme(<ThemeOptions>{
   components: {
     MuiButton,
     MuiTypography,
+    MuiRating,
   },
 })
 
@@ -123,6 +138,8 @@ declare module '@mui/material/styles' {
     lightest?: string
     gray1?: string
     gray2?: string
+    mirage?: string
+    mirage2?: string
   }
 
   interface Palette {
