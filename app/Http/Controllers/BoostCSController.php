@@ -13,11 +13,6 @@ class BoostCSController extends Controller
 
     protected const MIN_ELO = 25;
 
-    public function index()
-    {
-
-    }
-
     public function calcRank(BoostingRankCsRequest $request)
     {
         $data = $request->validated();
@@ -73,7 +68,7 @@ class BoostCSController extends Controller
     {
         $ranks = Cache::remember('tariffs_ranks_cs', 86400, function () {
             return TariffsRankCs::all();
-        },);
+        });
         $rank_from = $ranks->sortBy('rank_from')->first()->rank_from;
         $rank_to = $ranks->sortByDesc('rank_from')->first()->rank_to;
         return $this->success(['min-rank' => $rank_from, 'max-rank' => $rank_to]);
