@@ -10,9 +10,14 @@ export const routesConfig = [
     alias: "profile",
   },
   {
-    title: "Authorization",
-    path: "/login",
-    alias: "login",
+    title: "Сlient-area Auth",
+    path: "client-area/auth",
+    alias: "auth",
+  },
+  {
+    title: "Сlient-area Dashboard",
+    path: "client-area/dashboard",
+    alias: "dashboard",
   },
   {
     title: "CSGO Boosting",
