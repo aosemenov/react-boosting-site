@@ -91,14 +91,20 @@ export const MuiButton = {
           },
         '.MuiTypography-root': {
           color: '#F33041',
-        }
+        },
+        [`.${buttonClasses.startIcon}`]: {
+          color: '#F33041',
+        },
       },
       ['.MuiTypography-root']: {
         position: 'relative',
         zIndex: '1',
         fontWeight: 700,
         color: 'white',
-      }
+      },
+      [`.${buttonClasses.startIcon}`]: {
+        color: 'white',
+      },
     },
     cancel: {
       color: '#333333',

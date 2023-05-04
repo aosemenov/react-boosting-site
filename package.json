@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --mode development --open --config webpack.ts",
-    "dev": "webpack --mode development --config webpack.ts",
     "build": "webpack --mode production --config webpack.ts",
     "format:check": "prettier --check \"src/**/*.ts*\"",
     "format:fix": "prettier --write \"src/**/*.ts*\"",
@@ -17,10 +16,11 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@fontsource/fugaz-one": "^4.5.9",
     "@fontsource/open-sans": "^4.5.14",
     "@fontsource/poppins": "^4.5.10",
     "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.10.1",
+    "@mui/material": "^5.12.3",
     "@mui/x-date-pickers": "^5.0.1",
     "axios": "^0.27.2",
     "compose-function": "^3.0.3",
@@ -30,6 +30,7 @@
     "dotenv-webpack": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.2.1",
     "swiper": "^9.2.0"

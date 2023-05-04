@@ -26,8 +26,6 @@ export const StyledDrawer = styled(Drawer)<any>(
       background: theme.palette.common.white,
     },
     '.menu-mobile': {
-      display: 'flex',
-      flexDirection: 'column',
       '&__item': {
         marginBottom: '12px',
         '&:last-of-type': {

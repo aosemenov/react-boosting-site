@@ -27,7 +27,7 @@ export const ContentWrapper = styled(Box)<BoxProps>(
   ({ theme }) => ({
     position: 'relative',
     flexGrow: 1,
-    backgroundImage: 'url("/dist/media/images/bg-sprite-1.svg")',
+    backgroundImage: 'url("/media/images/bg-sprite-1.svg")',
     backgroundRepeat: 'repeat',
     '&::before': {
       position: 'absolute',
