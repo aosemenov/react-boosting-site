@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack serve --mode development --open --config webpack.ts",
     "build": "webpack --mode production --config webpack.ts",
+    "dev": "webpack --mode development --config webpack.ts",
     "format:check": "prettier --check \"src/**/*.ts*\"",
     "format:fix": "prettier --write \"src/**/*.ts*\"",
     "lint": "eslint \"src/**/*.ts*\" --fix",
