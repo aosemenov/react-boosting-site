@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26c6e1e6affb08376a841538cbeac3b5",
+    "content-hash": "65e4332d051db33ffd42b469b5b99391",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -1019,6 +1019,63 @@
             "time": "2017-07-23T21:35:13+00:00"
         },
         {
+            "name": "fiks/yoo-kassa-laravel",
+            "version": "0.0.35-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Danil005/YooKassa-Laravel.git",
+                "reference": "56eaac0dc7ba4bc41688eff18e568ae459a55383"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Danil005/YooKassa-Laravel/zipball/56eaac0dc7ba4bc41688eff18e568ae459a55383",
+                "reference": "56eaac0dc7ba4bc41688eff18e568ae459a55383",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.0.1",
+                "jeremeamia/superclosure": "^2.4",
+                "yoomoney/yookassa-sdk-php": "^2.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.18"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Fiks\\YooKassa\\YooKassaServiceProvider"
+                    ],
+                    "aliases": {
+                        "YooKassa": "Fiks\\YooKassa\\YooKassaFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fiks\\YooKassa\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Danil Sidorenko",
+                    "email": "danilsidorenko00@gmail.com"
+                }
+            ],
+            "description": "YooKassa Laravel Packagist",
+            "support": {
+                "issues": "https://github.com/Danil005/YooKassa-Laravel/issues",
+                "source": "https://github.com/Danil005/YooKassa-Laravel/tree/0.0.35-alpha"
+            },
+            "abandoned": true,
+            "time": "2021-06-23T15:44:07+00:00"
+        },
+        {
             "name": "fruitcake/laravel-cors",
             "version": "v2.2.0",
             "source": {
@@ -1651,6 +1708,69 @@
                 "source": "https://github.com/irazasyed/telegram-bot-sdk/tree/v3.9"
             },
             "time": "2022-08-02T19:46:39+00:00"
+        },
+        {
+            "name": "jeremeamia/superclosure",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeremeamia/super_closure.git",
+                "reference": "5707d5821b30b9a07acfb4d76949784aaa0e9ce9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeremeamia/super_closure/zipball/5707d5821b30b9a07acfb4d76949784aaa0e9ce9",
+                "reference": "5707d5821b30b9a07acfb4d76949784aaa0e9ce9",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^1.2|^2.0|^3.0|^4.0",
+                "php": ">=5.4",
+                "symfony/polyfill-php56": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SuperClosure\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeremy Lindblom",
+                    "email": "jeremeamia@gmail.com",
+                    "homepage": "https://github.com/jeremeamia",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Serialize Closure objects, including their context and binding",
+            "homepage": "https://github.com/jeremeamia/super_closure",
+            "keywords": [
+                "closure",
+                "function",
+                "lambda",
+                "parser",
+                "serializable",
+                "serialize",
+                "tokenizer"
+            ],
+            "support": {
+                "issues": "https://github.com/jeremeamia/super_closure/issues",
+                "source": "https://github.com/jeremeamia/super_closure/tree/master"
+            },
+            "abandoned": "opis/closure",
+            "time": "2018-03-21T22:21:57+00:00"
         },
         {
             "name": "larapack/doctrine-support",
@@ -5766,6 +5886,74 @@
             "time": "2022-11-03T14:55:06+00:00"
         },
         {
+            "name": "symfony/polyfill-php56",
+            "version": "v1.20.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php56.git",
+                "reference": "54b8cd7e6c1643d78d011f3be89f3ef1f9f4c675"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/54b8cd7e6c1643d78d011f3be89f3ef1f9f4c675",
+                "reference": "54b8cd7e6c1643d78d011f3be89f3ef1f9f4c675",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.20-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 5.6+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php56/tree/v1.20.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-23T14:02:19+00:00"
+        },
+        {
             "name": "symfony/polyfill-php72",
             "version": "v1.27.0",
             "source": {
@@ -7016,6 +7204,53 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "yoomoney/yookassa-sdk-php",
+            "version": "2.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://git.yoomoney.ru/scm/sdk/yookassa-sdk-php.git",
+                "reference": "bfcd44553c10497f881851a9a674917b73acc21a"
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0"
+            },
+            "require-dev": {
+                "ext-xml": "*",
+                "mockery/mockery": "^0.9.9",
+                "phpunit/phpunit": "^4.8.35 || ^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "YooKassa\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "YooMoney",
+                    "email": "cms@yoomoney.ru"
+                }
+            ],
+            "description": "This is a developer tool for integration with YooMoney.",
+            "homepage": "https://yookassa.ru/developers/api",
+            "keywords": [
+                "api",
+                "payments",
+                "sdk",
+                "yookassa",
+                "yoomoney"
+            ],
+            "time": "2021-12-28T11:36:24+00:00"
         }
     ],
     "packages-dev": [
