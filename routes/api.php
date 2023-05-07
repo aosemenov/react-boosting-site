@@ -39,8 +39,8 @@ Route::middleware('json.response')->group(function() {
 
     Route::get('/orders/{user_id}', [OrderController::class, 'getListOrders']);
 
-    Route::post('/payment/{order_id}', [PaymentController::class, 'payOrder']);
-    Route::get('/payment/{order_id}', [PaymentController::class, 'getPayOrder']);
+//    Route::post('/payment/{order_id}', [PaymentController::class, 'payOrder']);
+//    Route::get('/payment/{order_id}', [PaymentController::class, 'getPayOrder']);
 
 
     Route::post('/user/create', [UserController::class, 'createUser']);

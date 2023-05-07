@@ -9,6 +9,7 @@ use App\Models\BoostVr;
 use App\Models\OfferType;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\Yookassa;
 use Fiks\YooKassa\YooKassaApi;
 use Illuminate\Foundation\Http\FormRequest;
 use Log;
@@ -28,37 +29,42 @@ class OrderController extends Controller
 
         $offer = $this->createOffer($data);
         if ($offer) {
-            //TODO: Добавить user_id
-            $order->user_id = 1;
+            $order->user_id = $data['user_id'];
             $order->offer_id = $offer['id'];
             $order->offer_type = OfferType::getTypes($data['offer_type'])->getId();
             //TODO: Добавить скидки
+
             $order->total_sum = $offer['sum'];
             $order->status = OrderStatus::getWaitStatus()->getId();
             $order->comment = $data['comment'];
 
-            $order->save();
+            $kassa = new YooKassaApi();
+            try {
+                //TODO: Указать описание для буста или взять описание из аккаунта
+                $payment = $kassa->createPayment($order->total_sum, self::DEFAULT_CURRENCY, $order->comment, $order->user_id);
+                $payData = $payment->response();
+
+                $pay = Yookassa::where('payment_id', $payData['id'])->first();
+                $order->payment_id = $pay->id;
+                $order->save();
+
+            } catch (\Exception $e) {
+                Log::error($e->getMessage());
+                $this->error(500, "Внутренняя ошибка оплаты, попробуйте позже.");
+            }
+
+            $result = [
+                'link' => $payData->getConfirmation()->getConfirmationUrl(),
+                'price' => $payData->getAmount()->getValue(),
+                'currency' => $payData->getAmount()->getCurrency(),
+                'message' => "Заказ создан и ожидает оплаты"
+            ];
+
+            return $this->success([$result]);
+
         }
 
-        $kassa = new YooKassaApi();
-        try {
-            //TODO: Указать описание для буста или взять описание из аккаунта
-            $payment = $kassa->createPayment($order->total_sum, self::DEFAULT_CURRENCY, $order->comment, $order->user_id);
-            $payData = $payment->response();
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            $this->error(500, "Внутренняя ошибка оплаты, попробуйте позже.");
-        }
-
-        $result = [
-            'link' => $payData->getConfirmation()->getConfirmationUrl(),
-            'price' => $payData->getAmount()->getValue(),
-            'currency' => $payData->getAmount()->getCurrency(),
-            'message' => "Заказ создан и ожидает оплаты"
-        ];
-
-        return $this->success([$result]);
-
+        $this->error(500, 'Ошибка создания оффера');
     }
 
     public function updateOrder(FormRequest $request, int $id)
@@ -108,11 +114,11 @@ class OrderController extends Controller
         if ($data['offer_type'] == OfferType::getBoostCsType()->getCode()) {
             $offer = new BoostCs();
 
-            if (!empty($data['from_rank']) && !empty($data['to_rank'])) {
+            if (isset($data['from_rank']) && isset($data['to_rank'])) {
                 $offer->from_rank = $data['from_rank'];
                 $offer->to_rank = $data['to_rank'];
                 $offer->sum = BoostCs::calcSumRank($data['from_rank'], $data['to_rank']);
-            } elseif (!empty($data['from_elo']) && !empty($data['to_elo'])) {
+            } elseif (isset($data['from_elo']) && isset($data['to_elo'])) {
                 $offer->from_elo = $data['from_elo'];
                 $offer->to_elo = $data['to_elo'];
                 $offer->sum = BoostCs::calcSumElo($data['from_elo'], $data['to_elo']);
