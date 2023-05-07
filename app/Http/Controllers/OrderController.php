@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderStatus;
 use Fiks\YooKassa\YooKassaApi;
 use Illuminate\Foundation\Http\FormRequest;
+use Log;
 
 class OrderController extends Controller
 {
@@ -27,6 +28,7 @@ class OrderController extends Controller
 
         $offer = $this->createOffer($data);
         if ($offer) {
+            //TODO: Добавить user_id
             $order->user_id = 1;
             $order->offer_id = $offer['id'];
             $order->offer_type = OfferType::getTypes($data['offer_type'])->getId();
@@ -38,18 +40,24 @@ class OrderController extends Controller
             $order->save();
         }
 
-
         $kassa = new YooKassaApi();
         try {
             //TODO: Указать описание для буста или взять описание из аккаунта
-            $payment = $kassa->createPayment($order->total_sum, self::DEFAULT_CURRENCY, $order->comment, 1);
+            $payment = $kassa->createPayment($order->total_sum, self::DEFAULT_CURRENCY, $order->comment, $order->user_id);
+            $payData = $payment->response();
         } catch (\Exception $e) {
-            dump($e->getCode());
-            dd($e->getMessage());
+            Log::error($e->getMessage());
+            $this->error(500, "Внутренняя ошибка оплаты, попробуйте позже.");
         }
 
-        dd($payment->response()->toArray());
-        return $this->success(['Заказ успешно создан']);
+        $result = [
+            'link' => $payData->getConfirmation()->getConfirmationUrl(),
+            'price' => $payData->getAmount()->getValue(),
+            'currency' => $payData->getAmount()->getCurrency(),
+            'message' => "Заказ создан и ожидает оплаты"
+        ];
+
+        return $this->success([$result]);
 
     }
 
