@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Order\CreatePaymentRequest;
+use App\Models\OfferType;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Payment;
@@ -52,16 +53,23 @@ class PaymentController extends Controller
 
         $yookassaPay->save();
 
-        if ($event == 'payment.succeeded' && $data['status'] == 'succeeded' && $data['paid']) {
-            $order->status = OrderStatus::getSearchBoostStatus()->getId();
-        } elseif ($event == 'payment.canceled' || $data['status'] == 'canceled') {
-            $order->status = OrderStatus::getCancelStatus()->getId();
-        } elseif ($event == 'refund.succeeded') {
-            $order->status = OrderStatus::getCancelStatus()->getId();
+
+        if ($order->offer_type == OfferType::getBoostCsType()->getId()
+            || $order->offer_type == OfferType::getBoostVrType()->getId()) {
+            if ($event == 'payment.succeeded' && $data['status'] == 'succeeded' && $data['paid']) {
+                $order->status = OrderStatus::getSearchBoostStatus()->getId();
+            } elseif ($event == 'payment.canceled' || $data['status'] == 'canceled') {
+                $order->status = OrderStatus::getCancelStatus()->getId();
+            } elseif ($event == 'refund.succeeded') {
+                $order->status = OrderStatus::getCancelStatus()->getId();
+            }
+        } elseif ($order->offer_type == OfferType::getAccountType()->getId()) {
+            //TODO: Тут добавить отправку аккаунта пользователю
+            $order->status = OrderStatus::getSuccessStatus()->getId();
         }
 
         $order->save();
 
-        $this->success(['message' => "Оплата прошла успешно"]);
+        $this->success(['message' => "OK"]);
     }
 }

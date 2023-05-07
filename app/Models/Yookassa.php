@@ -9,7 +9,6 @@ class Yookassa extends Model
     /**
      * @var mixed
      */
-    public $id;
     protected $table = 'yookassa';
 
     protected $attributes = [
