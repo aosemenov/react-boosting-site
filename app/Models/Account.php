@@ -19,4 +19,9 @@ class Account extends Model {
         'type',
     ];
 
+//    public function type()
+//    {
+//        return $this->hasOne(AccountType::class);
+//    }
+
 }

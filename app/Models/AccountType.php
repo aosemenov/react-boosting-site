@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Cache;
 class AccountType extends Model
 {
     protected const DEFAULT_TTL = 86400;
-    const TYPE_ACCOUNT_CS = 'CS';
-    const TYPE_ACCOUNT_VR = 'VR';
+    private const TYPE_ACCOUNT_CS = 'CS';
+    private const TYPE_ACCOUNT_VR = 'VR';
 
     public $timestamps = false;
 
@@ -82,5 +82,13 @@ class AccountType extends Model
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
