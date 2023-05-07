@@ -8,16 +8,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('yookassa', function(Blueprint $table) {
-            $table->bigInteger('order_id');
-            $table->float('profit');
-            $table->float('refunded');
+            $table->float('profit')->nullable();
+            $table->float('refunded')->nullable();
         });
     }
 
     public function down(): void
     {
         Schema::table('yookassa', function(Blueprint $table) {
-            $table->removeColumn('order_id');
             $table->removeColumn('profit');
             $table->removeColumn('refunded');
         });

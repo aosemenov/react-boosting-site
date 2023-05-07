@@ -10,8 +10,12 @@ use App\Models\OfferType;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Yookassa;
+use Exception;
 use Fiks\YooKassa\YooKassaApi;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
 use Log;
 
 class OrderController extends Controller
@@ -19,6 +23,10 @@ class OrderController extends Controller
 
     private const DEFAULT_CURRENCY = "RUB";
 
+    /**
+     * @param CreateOrderRequest $request
+     * @return Application|ResponseFactory|Response|void
+     */
     public function createOrder(CreateOrderRequest $request)
     {
         //TODO: Проверка на авторизацию
@@ -39,28 +47,29 @@ class OrderController extends Controller
             $order->comment = $data['comment'];
 
             $kassa = new YooKassaApi();
+
             try {
                 //TODO: Указать описание для буста или взять описание из аккаунта
                 $payment = $kassa->createPayment($order->total_sum, self::DEFAULT_CURRENCY, $order->comment, $order->user_id);
                 $payData = $payment->response();
 
-                $pay = Yookassa::where('payment_id', $payData['id'])->first();
+                $pay = Yookassa::where('payment_id', $payData->getId())->first();
                 $order->payment_id = $pay->id;
                 $order->save();
 
-            } catch (\Exception $e) {
+                $result = [
+                    'link' => $payData->getConfirmation()->getConfirmationUrl(),
+                    'price' => $payData->getAmount()->getValue(),
+                    'currency' => $payData->getAmount()->getCurrency(),
+                    'message' => "Заказ создан и ожидает оплаты"
+                ];
+
+                return $this->success([$result]);
+
+            } catch (Exception $e) {
                 Log::error($e->getMessage());
                 $this->error(500, "Внутренняя ошибка оплаты, попробуйте позже.");
             }
-
-            $result = [
-                'link' => $payData->getConfirmation()->getConfirmationUrl(),
-                'price' => $payData->getAmount()->getValue(),
-                'currency' => $payData->getAmount()->getCurrency(),
-                'message' => "Заказ создан и ожидает оплаты"
-            ];
-
-            return $this->success([$result]);
 
         }
 
