@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Cache;
 
 class BoostCSController extends Controller
 {
-
     protected const MIN_ELO = 25;
 
     public function calcRank(BoostingRankCsRequest $request)
@@ -22,7 +21,7 @@ class BoostCSController extends Controller
         $sum = 0.0;
         $i = $data['rank_from'];
 
-        $ranks = Cache::remember('tariffs_ranks_cs', 86400, function () {
+        $ranks = Cache::remember('tariffs_ranks_cs', self::DEFAULT_TTL, function () {
             return TariffsRankCs::all();
         });
 
@@ -50,7 +49,7 @@ class BoostCSController extends Controller
         $sum = 0.0;
         $i = $data['elo_from'];
 
-        $elos = Cache::remember('tariffs_elos_cs', 86400, function () {
+        $elos = Cache::remember('tariffs_elos_cs', self::DEFAULT_TTL, function () {
             return TariffsEloCs::all();
         });
 
@@ -66,7 +65,7 @@ class BoostCSController extends Controller
 
     public function getRankInfo()
     {
-        $ranks = Cache::remember('tariffs_ranks_cs', 86400, function () {
+        $ranks = Cache::remember('tariffs_ranks_cs', self::DEFAULT_TTL, function () {
             return TariffsRankCs::all();
         });
         $rank_from = $ranks->sortBy('rank_from')->first()->rank_from;
@@ -76,7 +75,7 @@ class BoostCSController extends Controller
 
     public function getEloInfo()
     {
-        $elos = Cache::remember('tariffs_elos_cs', 86400, function () {
+        $elos = Cache::remember('tariffs_elos_cs', self::DEFAULT_TTL, function () {
             return TariffsEloCs::all();
         });
         $elo_from = $elos->sortBy('elo_from')->first()->elo_from;

@@ -14,7 +14,6 @@ class Order extends Model {
         'payment_id' => 0,
         'discount_id' => 0,
         'total_sum' => 0,
-        'status' => 1,
         'booster_id' => 0,
         'comment' => "",
     ];

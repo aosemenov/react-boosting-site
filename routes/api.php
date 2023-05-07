@@ -57,6 +57,8 @@ Route::middleware('json.response')->group(function() {
 });
 
 
+Route::post('/payment/order-status', [PaymentController::class, 'getYooKassa']);
+
 //Route::middleware('tg.chat')->group(function() {
 //
 //

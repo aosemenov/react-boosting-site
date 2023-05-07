@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
 
+    protected const DEFAULT_TTL = 86400;
     protected const DEFAULT_ERROR_CODE = 500;
     protected const DEFAULT_ERROR_MESSAGE = "Ошибка в работе сервиса. Повторите попытку позже.";
 
