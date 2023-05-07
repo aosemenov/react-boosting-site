@@ -8,14 +8,20 @@ use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\Yookassa;
-use Fiks\YooKassa\YooKassaApi;
 use Illuminate\Foundation\Http\FormRequest;
 use Log;
 
 class PaymentController extends Controller
 {
-    public function payOrder(FormRequest $request)
+    public function payOrder(FormRequest $request, int $order_id)
     {
+
+//        $order = Order::where('id', $order_id)->first();
+//        if (!empty($order->offer_id)) {
+//
+//        } else {
+//
+//        }
         Log::info($request);
         $this->success(['message' => "Заказ не оплачен"]);
     }
