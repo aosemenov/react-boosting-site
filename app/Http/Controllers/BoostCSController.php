@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Boosting\BoostingEloCsRequest;
 use App\Http\Requests\Boosting\BoostingRankCsRequest;
+use App\Models\BoostCs;
 use App\Models\TariffsEloCs;
 use App\Models\TariffsRankCs;
 use Illuminate\Support\Facades\Cache;
@@ -18,24 +19,10 @@ class BoostCSController extends Controller
         if ($data['rank_from'] >= $data['rank_to']) {
             return $this->error(400, 'Выбранный ранг некорректный');
         }
-        $sum = 0.0;
-        $i = $data['rank_from'];
 
-        $ranks = Cache::remember('tariffs_ranks_cs', self::DEFAULT_TTL, function () {
-            return TariffsRankCs::all();
-        });
+        $sum = BoostCs::calcSumRank($data['rank_from'], $data['rank_to']);
 
-        foreach ($ranks as $rank) {
-            if ($i >= $data['rank_to']) {
-                break;
-            }
-
-            while ($i >= $rank->rank_from && $i <= $rank->rank_to && $i < $data['rank_to']) {
-                $sum += $rank->price;
-                $i++;
-            }
-        }
-
+        //TODO: Добавить скидки
         return $this->success(['sum' => $sum]);
 
     }
@@ -46,21 +33,10 @@ class BoostCSController extends Controller
         if ($data['elo_from'] >= $data['elo_to']) {
             return $this->error(400, 'ELO некорректно');
         }
-        $sum = 0.0;
-        $i = $data['elo_from'];
+        $sum = BoostCs::calcSumElo($data['elo_from'], $data['elo_to']);
 
-        $elos = Cache::remember('tariffs_elos_cs', self::DEFAULT_TTL, function () {
-            return TariffsEloCs::all();
-        });
-
-        foreach ($elos as $elo) {
-            while ($i <= $elo->elo_to && $i >= $elo->elo_from && $i < $data['elo_to']) {
-                $sum += $elo->price / self::MIN_ELO;
-                $i++;
-            }
-        }
-
-        return $this->success(['sum' => round($sum, 1)]);
+        //TODO: Добавить скидки
+        return $this->success(['sum' => $sum]);
     }
 
     public function getRankInfo()

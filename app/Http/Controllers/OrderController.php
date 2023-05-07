@@ -27,7 +27,8 @@ class OrderController extends Controller
             $order->user_id = 1;
             $order->offer_id = $offer['id'];
             $order->offer_type = OfferType::getTypes($data['offer_type'])->getId();
-            $order->total_sum = 100.0;
+            //TODO: Добавить скидки
+            $order->total_sum = $offer['sum'];
             $order->status = OrderStatus::getWaitStatus()->getId();
             $order->comment = $data['comment'];
 
@@ -91,11 +92,17 @@ class OrderController extends Controller
         if ($data['offer_type'] == OfferType::getBoostCsType()->getCode()) {
             $offer = new BoostCs();
 
-            $offer->from_elo = $data['from_elo'];
-            $offer->to_elo = $data['to_elo'];
-            $offer->from_rank = $data['from_rank'];
-            $offer->to_rank = $data['to_rank'];
-            $offer->sum = 100.0;
+            if (!empty($data['from_rank']) && !empty($data['to_rank'])) {
+                $offer->from_rank = $data['from_rank'];
+                $offer->to_rank = $data['to_rank'];
+                $offer->sum = BoostCs::calcSumRank($data['from_rank'], $data['to_rank']);
+            } elseif (!empty($data['from_elo']) && !empty($data['to_elo'])) {
+                $offer->from_elo = $data['from_elo'];
+                $offer->to_elo = $data['to_elo'];
+                $offer->sum = BoostCs::calcSumElo($data['from_elo'], $data['to_elo']);
+            } else {
+                return false;
+            }
 
             $offer->save();
         } elseif ($data['offer_type'] == OfferType::getBoostVrType()->getCode()) {

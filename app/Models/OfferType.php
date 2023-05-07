@@ -73,7 +73,7 @@ class OfferType extends Model
     private static function getAllTypes()
     {
         return Cache::remember('offer_types_all', self::DEFAULT_TTL, function () {
-            return $this->all();
+            return OfferType::all();
         });
     }
 

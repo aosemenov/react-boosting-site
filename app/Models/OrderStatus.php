@@ -78,7 +78,7 @@ class OrderStatus extends Model
     private static function getAllStatuses()
     {
         return Cache::remember('order_statuses_all', self::DEFAULT_TTL, function () {
-            return $this->all();
+            return OrderStatus::all();
         });
     }
 
