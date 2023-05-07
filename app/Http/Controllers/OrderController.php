@@ -14,6 +14,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class OrderController extends Controller
 {
+
+    private const DEFAULT_CURRENCY = "RUB";
+
     public function createOrder(CreateOrderRequest $request)
     {
         //TODO: Проверка на авторизацию
@@ -36,11 +39,16 @@ class OrderController extends Controller
         }
 
 
-//        $kassa = new YooKassaApi();
+        $kassa = new YooKassaApi();
+        try {
+            //TODO: Указать описание для буста или взять описание из аккаунта
+            $payment = $kassa->createPayment($order->total_sum, self::DEFAULT_CURRENCY, $order->comment, 1);
+        } catch (\Exception $e) {
+            dump($e->getCode());
+            dd($e->getMessage());
+        }
 
-//        $payment = $kassa->createPayment(1.0, 'RUB', 'dddd', 1);
-
-//        $payment->response()->toArray();
+        dd($payment->response()->toArray());
         return $this->success(['Заказ успешно создан']);
 
     }
