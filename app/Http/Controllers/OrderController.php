@@ -113,8 +113,6 @@ class OrderController extends Controller
 
     private function createOffer(array $data)
     {
-        //TODO: проверка на все поля для создания оффера
-
         if (!in_array($data['offer_type'], OfferType::getAllTypesCode())) {
             return false;
         }
@@ -147,13 +145,16 @@ class OrderController extends Controller
 
             $offer->save();
         } elseif ($data['offer_type'] == OfferType::getAccountType()->getCode()) {
-            $offer = Account::where('id', $data['offer'])
+            $offer = Account::where('id', $data['offer_id'])
                 ->where('active', true)
                 ->first();
 
             if ($offer) {
                 $offer->active = false;
                 $offer->save();
+                $offer->sum = $offer->price;
+            } else {
+                return false;
             }
         }
 

@@ -24,7 +24,7 @@ class AccountController extends Controller
     public function getAccountsCs()
     {
         $accounts = Account::where('type', AccountType::getCsType()->getId())
-            ->where('active', true)
+            ->where('active', true)->images()
             ->get();
 
         if (count($accounts) > 0) {
