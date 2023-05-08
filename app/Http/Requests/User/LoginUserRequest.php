@@ -10,7 +10,7 @@ class LoginUserRequest extends FormRequest
     {
         return [
             'email' => 'nullable|email:rfc,dns',
-            'nickname' => 'nullable|required|string',
+            'nickname' => 'nullable|string',
             'password' => 'required|string',
         ];
     }

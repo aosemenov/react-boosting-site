@@ -20,10 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::middleware('json.response')->group(function() {
 
     Route::get('/boosting/calc/cs-rank', [BoostCSController::class, 'calcRank']);
@@ -33,19 +29,19 @@ Route::middleware('json.response')->group(function() {
     Route::get('/boosting/get/cs-elo-info', [BoostCSController::class, 'getEloInfo']);
 
 
-    Route::post('/order/create', [OrderController::class, 'createOrder'])->middleware('auth');
-    Route::post('/order/{id}', [OrderController::class, 'updateOrder'])->middleware('auth');
-    Route::get('/order/{id}', [OrderController::class, 'getOrder'])->middleware('auth');
+    Route::post('/order/create', [OrderController::class, 'createOrder'])->middleware('auth:sanctum');
+    Route::post('/order/{id}', [OrderController::class, 'updateOrder'])->middleware('auth:sanctum');
+    Route::get('/order/{id}', [OrderController::class, 'getOrder'])->middleware('auth:sanctum');
 
-    Route::get('/orders/{user_id}', [OrderController::class, 'getListOrders'])->middleware('auth');
+    Route::get('/orders/{user_id}', [OrderController::class, 'getListOrders'])->middleware('auth:sanctum');
 
-    Route::post('/payment/{order_id}', [PaymentController::class, 'payOrder'])->middleware('auth');
-    Route::get('/payment/{order_id}', [PaymentController::class, 'getPayOrder'])->middleware('auth');
+    Route::post('/payment/{order_id}', [PaymentController::class, 'payOrder'])->middleware('auth:sanctum');
+    Route::get('/payment/{order_id}', [PaymentController::class, 'getPayOrder'])->middleware('auth:sanctum');
 
 
     Route::post('/user/create', [UserController::class, 'createUser']);
-    Route::post('/user/{id}', [UserController::class, 'updateUser'])->middleware('auth');
-    Route::get('/user/{id}', [UserController::class, 'getUser'])->middleware('auth');
+    Route::post('/user/update/{id}', [UserController::class, 'updateUser'])->middleware('auth:sanctum');
+    Route::get('/user/get/{id}', [UserController::class, 'getUser'])->middleware('auth:sanctum');
     Route::post('/user/login', [UserController::class, 'login']);
 
 //    Route::get('/users', [UserController::class, 'getListUsers']);

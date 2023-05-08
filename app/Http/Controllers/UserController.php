@@ -6,23 +6,59 @@ use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\LoginUserRequest;
 use App\Models\User;
 use Auth;
+use Hash;
 use Request;
 
 class UserController extends Controller
 {
+    private const DEFAULT_SELECT = [
+        'id',
+        'email',
+        'nickname',
+        'name',
+        'first_name',
+        'last_name',
+    ];
+
     public function createUser(CreateUserRequest $request)
     {
+        $data = $request->validated();
 
+        $name = $data['name'] ?? "";
+        $first_name = $data['first_name'] ?? "";
+        $last_name = $data['last_name'] ?? "";
+        $telegram_link = $data['telegram_link'] ?? "";
+        $vk_link = $data['vk_link'] ?? "";
+
+        $user = new User();
+        $user->email = strtolower(trim($data['email']));
+        $user->name = ucfirst(strtolower(trim($name)));
+        $user->first_name = ucfirst(strtolower($first_name));
+        $user->last_name = ucfirst(strtolower(trim($last_name)));
+        $user->active = true;
+        $user->nickname = ucfirst(strtolower(trim($data['nickname'])));
+        $user->telegram_link = trim($telegram_link);
+        $user->vk_link = trim($vk_link);
+        $user->password = $data['password'];
+
+        $user->save();
+        $token = $user->createToken('bigboost_user_auth')->plainTextToken;
+
+        return $this->success([
+            'token' => $token,
+            'user' => $user,
+        ]);
     }
 
-    public function updateUser(int $id)
+    public function updateUser(Request $request, $id)
     {
-
+        return $this->success(['message' => 'Успешно обновлено.']);
     }
 
-    public function getUser(int $id)
+    public function getUser(Request $request, $id)
     {
-        $user = User::where('id', $id)
+        $user = User::select(self::DEFAULT_SELECT)
+            ->where('id', $id)
             ->where('active', true)
             ->select()
             ->first();
@@ -54,17 +90,23 @@ class UserController extends Controller
     {
         $data = $request->validated();
         if (Auth::check()) {
-            return $this->error(400, "Пользователь уже зарегистрирован");
+            return $this->error(401, "Пользователь уже зарегистрирован");
         }
-        $user = User::where('email', $data['email'])
-            ->orWhere('nickname', $data['nickname'])
-            ->first();
+
+        $user = User::select(array_merge(self::DEFAULT_SELECT, ['password']));
+        if (!empty($data['email'])) {
+            $user = $user->where('email', $data['email'])->first();
+        } elseif (!empty($data['nickname'])) {
+            $user = $user->where('nickname', $data['nickname'])->first();
+        } else {
+            return $this->error(401, 'Не указан email или nickname');
+        }
 
         if (!$user) {
             return $this->error(404, 'Пользователя не существует');
         }
-        if (!\Hash::check($data['password'], $user->password)) {
-            return $this->error(400, 'Неверный логин или пароль');
+        if (!Hash::check($data['password'], $user->password)) {
+            return $this->error(401, 'Неверный логин или пароль');
         }
         $token = $user->createToken('bigboost_user_auth')->plainTextToken;
 
