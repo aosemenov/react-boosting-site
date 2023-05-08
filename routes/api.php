@@ -33,21 +33,22 @@ Route::middleware('json.response')->group(function() {
     Route::get('/boosting/get/cs-elo-info', [BoostCSController::class, 'getEloInfo']);
 
 
-    Route::post('/order/create', [OrderController::class, 'createOrder']);
-//    Route::post('/order/{id}', [OrderController::class, 'updateOrder']);
-    Route::get('/order/{id}', [OrderController::class, 'getOrder']);
+    Route::post('/order/create', [OrderController::class, 'createOrder'])->middleware('auth');
+    Route::post('/order/{id}', [OrderController::class, 'updateOrder'])->middleware('auth');
+    Route::get('/order/{id}', [OrderController::class, 'getOrder'])->middleware('auth');
 
-    Route::get('/orders/{user_id}', [OrderController::class, 'getListOrders']);
+    Route::get('/orders/{user_id}', [OrderController::class, 'getListOrders'])->middleware('auth');
 
-//    Route::post('/payment/{order_id}', [PaymentController::class, 'payOrder']);
-//    Route::get('/payment/{order_id}', [PaymentController::class, 'getPayOrder']);
+    Route::post('/payment/{order_id}', [PaymentController::class, 'payOrder'])->middleware('auth');
+    Route::get('/payment/{order_id}', [PaymentController::class, 'getPayOrder'])->middleware('auth');
 
 
     Route::post('/user/create', [UserController::class, 'createUser']);
-    Route::post('/user/{id}', [UserController::class, 'updateUser']);
-    Route::get('/user/{id}', [UserController::class, 'getUser']);
+    Route::post('/user/{id}', [UserController::class, 'updateUser'])->middleware('auth');
+    Route::get('/user/{id}', [UserController::class, 'getUser'])->middleware('auth');
+    Route::post('/user/login', [UserController::class, 'login']);
 
-    Route::get('/users', [UserController::class, 'getListUsers']);
+//    Route::get('/users', [UserController::class, 'getListUsers']);
 
     Route::get('/accounts/vr', [AccountController::class, 'getAccountsVr']);
     Route::get('/accounts/cs', [AccountController::class, 'getAccountsCs']);

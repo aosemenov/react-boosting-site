@@ -10,6 +10,7 @@ use App\Models\OfferType;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Yookassa;
+use Auth;
 use Exception;
 use Fiks\YooKassa\YooKassaApi;
 use Illuminate\Contracts\Foundation\Application;
@@ -27,12 +28,13 @@ class OrderController extends Controller
 
     /**
      * @param CreateOrderRequest $request
-     * @return Application|ResponseFactory|Response|void
+     * @return Application|Response|ResponseFactory
      */
     public function createOrder(CreateOrderRequest $request)
     {
-        //TODO: Проверка на авторизацию
-
+        if (!Auth::check()) {
+            return $this->error(400, "Пользователь не авторизован");
+        }
         $data = $request->toArray();
 
         $order = new Order();
@@ -76,12 +78,12 @@ class OrderController extends Controller
 
             } catch (Exception $e) {
                 Log::error($e->getMessage());
-                $this->error(500, "Внутренняя ошибка оплаты, попробуйте позже.");
+                return $this->error(500, "Внутренняя ошибка оплаты, попробуйте позже.");
             }
 
         }
 
-        $this->error(500, 'Ошибка создания оффера');
+        return $this->error(500, 'Ошибка создания оффера');
     }
 
     public function updateOrder(FormRequest $request, int $id)

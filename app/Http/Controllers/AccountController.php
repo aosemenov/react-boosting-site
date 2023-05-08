@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\AccountType;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -19,6 +20,8 @@ class AccountController extends Controller
 
     public function getAccountsVr()
     {
+        dd(Auth::user());
+
         $accounts = Account::select(self::SELECTED_FIELD)
             ->where('type', AccountType::getVrType()->getId())
             ->where('active', true)
