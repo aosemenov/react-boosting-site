@@ -8,10 +8,20 @@ use App\Models\AccountType;
 
 class AccountController extends Controller
 {
+    private const SELECTED_FIELD = [
+        'name',
+        'description',
+        'price',
+        'type',
+        'created_at',
+        'updated_at',
+        'images',
+    ];
 
     public function getAccountsVr()
     {
-        $accounts = Account::where('type', AccountType::getVrType()->getId())
+        $accounts = Account::select(self::SELECTED_FIELD)
+            ->where('type', AccountType::getVrType()->getId())
             ->where('active', true)
             ->get();
 
@@ -24,7 +34,8 @@ class AccountController extends Controller
 
     public function getAccountsCs()
     {
-        $accounts = Account::where('type', AccountType::getCsType()->getId())
+        $accounts = Account::select(self::SELECTED_FIELD)
+            ->where('type', AccountType::getCsType()->getId())
             ->where('active', true)
             ->get();
 
@@ -37,7 +48,9 @@ class AccountController extends Controller
 
     public function getListAccounts()
     {
-        $accounts = Account::where('active', true)->get();
+        $accounts = Account::select(self::SELECTED_FIELD)
+            ->where('active', true)
+            ->get();
 
         if (count($accounts) > 0) {
             return $this->success($accounts->toArray());
@@ -48,7 +61,8 @@ class AccountController extends Controller
 
     public function getAccount(int $id)
     {
-        $account = Account::where('id', $id)
+        $account = Account::select(self::SELECTED_FIELD)
+            ->where('id', $id)
             ->where('active', true)
             ->first();
 
