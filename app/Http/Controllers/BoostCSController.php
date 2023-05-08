@@ -35,6 +35,7 @@ class BoostCSController extends Controller
         }
         $sum = BoostCs::calcSumElo($data['elo_from'], $data['elo_to']);
 
+
         //TODO: Добавить скидки
         return $this->success(['sum' => $sum]);
     }

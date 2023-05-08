@@ -24,9 +24,4 @@ class Account extends Model {
 //        return $this->hasOne(AccountType::class);
 //    }
 
-    public function images()
-    {
-        return $this->hasMany(AccountImage::class, 'account_id', 'id');
-    }
-
 }

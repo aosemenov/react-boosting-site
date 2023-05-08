@@ -14,6 +14,10 @@ return new class extends Migration {
             $table->longText('description');
             $table->float('price');
             $table->integer('type');
+            $table->text('images');
+            $table->string('login');
+            $table->string('password');
+            $table->string('additional');
             $table->timestamps();
         });
     }

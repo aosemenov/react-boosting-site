@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\AccountImage;
 use App\Models\AccountType;
 
 class AccountController extends Controller
@@ -24,7 +25,7 @@ class AccountController extends Controller
     public function getAccountsCs()
     {
         $accounts = Account::where('type', AccountType::getCsType()->getId())
-            ->where('active', true)->images()
+            ->where('active', true)
             ->get();
 
         if (count($accounts) > 0) {
