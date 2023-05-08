@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
-use App\Models\AccountImage;
 use App\Models\AccountType;
 
 class AccountController extends Controller

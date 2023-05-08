@@ -21,6 +21,8 @@ use Log;
 class OrderController extends Controller
 {
 
+    //TODO: Запросить коммент для заказа бустов. Желательно универсальный для VR и CS
+    private const DESCRIPTION_BOOST = "Это текст для оплаты заказов. Устанавливается из кода";
     private const DEFAULT_CURRENCY = "RUB";
 
     /**
@@ -49,8 +51,14 @@ class OrderController extends Controller
             $kassa = new YooKassaApi();
 
             try {
-                //TODO: Указать описание для буста или взять описание из аккаунта
-                $payment = $kassa->createPayment($order->total_sum, self::DEFAULT_CURRENCY, $order->comment, $order->user_id);
+
+                if ($order->offer_type == OfferType::getAccountType()->getId()) {
+                    $comment = $offer['description'];
+                } else {
+                    $comment = self::DESCRIPTION_BOOST;
+                }
+
+                $payment = $kassa->createPayment($order->total_sum, self::DEFAULT_CURRENCY, $comment, $order->user_id);
                 $payData = $payment->response();
 
                 $pay = Yookassa::where('payment_id', $payData->getId())->first();
