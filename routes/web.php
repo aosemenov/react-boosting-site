@@ -43,7 +43,9 @@ Route::get('/valorant-accounts', function () {
 Route::get('/coaching', function () {
     return view('root');
 });
-
+Route::get('/tg-auth', function () {
+    return view('root');
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

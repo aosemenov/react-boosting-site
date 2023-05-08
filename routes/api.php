@@ -5,6 +5,7 @@ use App\Http\Controllers\BoostCSController;
 use App\Http\Controllers\BoostVRController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Telegram\AuthTelegramController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,13 +45,12 @@ Route::middleware('json.response')->group(function() {
     Route::get('/user/get/{id}', [UserController::class, 'getUser'])->middleware('auth:sanctum');
     Route::post('/user/login', [UserController::class, 'login']);
 
-//    Route::get('/users', [UserController::class, 'getListUsers']);
-
     Route::get('/accounts/vr', [AccountController::class, 'getAccountsVr']);
     Route::get('/accounts/cs', [AccountController::class, 'getAccountsCs']);
     Route::get('/accounts', [AccountController::class, 'getListAccounts']);
     Route::get('/account/{id}', [AccountController::class, 'getAccount']);
 
+    Route::get('/tg/auth-code', [AuthTelegramController::class, 'getAuthCode'])->middleware('auth:sanctum');
 });
 
 
