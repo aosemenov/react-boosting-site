@@ -18,8 +18,3 @@ export type IAuthorizationUserResponse = {
 }
 
 export type IUserAuthorizationRequest = IUserAuthorization
-
-export type IUserAuthorizationResponse = {
-  success: boolean,
-  error?: IError,
-}

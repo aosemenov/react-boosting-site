@@ -19,10 +19,8 @@ export const fetchAuthUser = (payload: IUserAuthorizationRequest): AppThunk => a
     }
     if (!response.success) {
       dispatch(actions.authFailed(response.error))
-      console.log(response)
       return
     }
-
     dispatch(auth(response.payload.token))
     dispatch(actions.authSuccess(response.success))
     return

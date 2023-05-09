@@ -42,17 +42,25 @@ if (process.env.NODE_ENV !== 'production') {
         }
       }
       if (response.status !== 200) {
+        console.log(response)
         return {
           ...response,
           data: {
             success: false,
             error: {
+              message: response.data.message,
               code: IErrorCode.RESPONSE,
             }
           }
         }
       }
-      return response
+      return {
+        ...response,
+        data: {
+          payload: response.data,
+          success: true,
+        }
+      }
     },
 
     (error: any): IErrorResponse => {

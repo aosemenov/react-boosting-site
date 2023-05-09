@@ -1,10 +1,33 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { CustomTextField } from '@shared/ui/components/CustomTextField'
 import { paths } from '@app/paths/paths'
+import { useAppDispatch } from '@shared/hooks/store'
+import { useController, useForm } from 'react-hook-form'
+import { IUserRegister } from '@shared/api/registerUser/types'
 
 export const RegisterForm: FC<{}> = () => {
+  const dispatch = useAppDispatch()
+
+  const { handleSubmit, control } = useForm<IUserRegister>({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  })
+
+  const { field: passwordProps } = useController({ name: 'password', control })
+  const { field: emailProps } = useController({ name: 'email', control })
+  const { field: nicknameProps } = useController({ name: 'nickname', control })
+  const { field: nameProps } = useController({ name: 'name', control })
+  const { field: firstNameProps } = useController({ name: 'first_name', control })
+  const { field: lastNameProps } = useController({ name: 'last_name', control })
+  const { field: telegramLinkProps } = useController({ name: 'telegram_link', control })
+  const { field: vkLinkProps } = useController({ name: 'vk_link', control })
+
+  const onSubmit = useCallback((formData: IUserRegister) => {
+    dispatch(fetchRegisterUser(formData))
+  }, [])
+
   return (
     <>
       <Box
@@ -46,45 +69,50 @@ export const RegisterForm: FC<{}> = () => {
                 </Link>
               </Typography>
             </Stack>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing={3}>
                 <CustomTextField
                   fullWidth
                   required
-                  label="Login"
-                  name="login"
+                  label="Nickname"
+                  name="nickname"
                   variant="outlined"
+                  InputProps={nicknameProps}
                 />
                 <CustomTextField
                   fullWidth
-                  label="First name"
-                  name="firstName"
+                  label="Name"
+                  name="name"
                   variant="outlined"
+                  InputProps={nameProps}
                 />
                 <CustomTextField
                   fullWidth
-                  label="Middle Name"
-                  name="middleName"
+                  label="First Name"
+                  name="first_name"
                   variant="outlined"
+                  InputProps={firstNameProps}
                 />
                 <CustomTextField
                   fullWidth
                   label="Last Name"
-                  name="lastName"
+                  name="last_name"
                   variant="outlined"
+                  InputProps={lastNameProps}
                 />
                 <CustomTextField
                   fullWidth
-                  required
                   label="Telegram"
-                  name="telegram"
+                  name="telegram_link"
                   variant="outlined"
+                  InputProps={telegramLinkProps}
                 />
                 <CustomTextField
                   fullWidth
                   label="Vk"
-                  name="Vk"
+                  name="vk_link"
                   variant="outlined"
+                  InputProps={vkLinkProps}
                 />
                 <CustomTextField
                   fullWidth
@@ -92,6 +120,7 @@ export const RegisterForm: FC<{}> = () => {
                   name="email"
                   type="email"
                   variant="outlined"
+                  InputProps={emailProps}
                 />
                 <CustomTextField
                   fullWidth
@@ -100,6 +129,7 @@ export const RegisterForm: FC<{}> = () => {
                   name="password"
                   type="password"
                   variant="outlined"
+                  InputProps={passwordProps}
                 />
               </Stack>
               <Button

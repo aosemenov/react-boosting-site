@@ -12,6 +12,5 @@ export const auth = (token: string): AppThunk => async (dispatch) => {
   const cookies = new Cookies()
   cookies.remove(ICookiesToken.key, { path: paths.root })
   cookies.set(ICookiesToken.key, token, { path: paths.root })
-
   dispatch(actions.authSuccess(token))
 }

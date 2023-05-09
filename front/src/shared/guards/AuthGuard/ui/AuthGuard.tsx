@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useLayoutEffect } from 'react'
 import { paths } from '@app/paths/paths'
 import { ICookiesToken } from '@shared/store/types'
 import Cookies from 'universal-cookie'
@@ -11,7 +11,7 @@ export const AuthGuard: FC<any> = ({ children }) => {
 
   useEffect(() => {
     const tokenByCookies = cookies.get(ICookiesToken.key)
-    console.log('[tokenByCookies]', tokenByCookies)
+
     if (!tokenByCookies) {
       goToAuth()
     }

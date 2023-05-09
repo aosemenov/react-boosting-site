@@ -20,5 +20,5 @@ export type IError = {
 /** Cookies token */
 
 export enum ICookiesToken {
-  key = "AT",
+  key = "token",
 }
