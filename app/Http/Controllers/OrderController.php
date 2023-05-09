@@ -52,7 +52,15 @@ class OrderController extends Controller
             $order->user_id = $user->id;
             $order->offer_id = $offer['id'];
             $order->offer_type = OfferType::getTypes($data['offer_type'])->getId();
-            $order->total_sum = DiscountController::calcSum($offer['sum'], $data['discount'] ?? "");
+
+            $total_sum = $offer['sum'];
+            if (!empty($data['discount']) && ($discount = DiscountController::checkCode($data['discount']))) {
+                $total_sum = DiscountController::calcSum($total_sum, $data['discount']);
+                $order->discount_id = $discount->id;
+                unset($discount);
+            }
+
+            $order->total_sum = $total_sum;
             $order->status = OrderStatus::getWaitStatus()->getId();
             $order->comment = $data['comment'] ?? "";
 
