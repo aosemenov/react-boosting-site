@@ -43,9 +43,6 @@ class OrderController extends Controller
      */
     public function createOrder(CreateOrderRequest $request)
     {
-        if (!Auth::check()) {
-            return $this->error(400, "Пользователь не авторизован");
-        }
         $data = $request->toArray();
         $user = Auth::user();
         $order = new Order();
@@ -55,9 +52,7 @@ class OrderController extends Controller
             $order->user_id = $user->id;
             $order->offer_id = $offer['id'];
             $order->offer_type = OfferType::getTypes($data['offer_type'])->getId();
-            //TODO: Добавить скидки
-
-            $order->total_sum = $offer['sum'];
+            $order->total_sum = DiscountController::calcSum($offer['sum'], $data['discount'] ?? "");
             $order->status = OrderStatus::getWaitStatus()->getId();
             $order->comment = $data['comment'] ?? "";
 

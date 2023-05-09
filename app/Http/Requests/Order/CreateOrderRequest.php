@@ -16,6 +16,7 @@ class CreateOrderRequest extends FormRequest
             'to_rank' => 'integer|nullable',
             'from_elo' => 'integer|nullable',
             'to_elo' => 'integer|nullable',
+            'discount' => 'string|nullable',
         ];
     }
 
