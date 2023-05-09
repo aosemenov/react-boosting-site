@@ -42,12 +42,14 @@ export const ContentWrapper = styled(Box)<BoxProps>(
   }),
 )
 
-export const Layout404Component = ({ title }: ILayout): JSX.Element => {
+export const ErrorLayout = ({ MainBlock, alias, title }: ILayout): JSX.Element => {
   useDocumentTitle(title)
 
   return (
     <LayoutWrapper>
-        <Block404 />
+      <ContentWrapper>
+        <MainBlock/>
+      </ContentWrapper>
     </LayoutWrapper>
   )
 }

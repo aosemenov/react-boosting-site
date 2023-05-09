@@ -51,7 +51,7 @@ export const MuiButton = {
       position: 'relative',
       display: 'inline-flex',
       justifyContent: 'center',
-      padding: '8px 12px',
+      padding: '8px 16px',
       textDecoration: 'none',
       whiteSpace: 'nowrap',
       borderRadius: '28px',

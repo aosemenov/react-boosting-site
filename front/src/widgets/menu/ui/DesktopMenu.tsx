@@ -4,9 +4,9 @@ import styled from '@mui/material/styles/styled'
 import { Box, BoxProps, Button, Typography } from '@mui/material'
 
 import { menuItemPopoverModel } from '@widgets/menu/model/menuPopoverModel'
-import { usePushToPage } from '@shared/hooks/useToPage'
 import { MenuItemPopover } from '@widgets/menu/ui/MenuItemPopover'
 import { NavButton } from '@shared/ui/components/NavButton'
+import { NavLink } from 'react-router-dom'
 
 const Wrapper = styled(Box)<BoxProps>(
   ({ theme }) => ({
@@ -18,7 +18,7 @@ const Wrapper = styled(Box)<BoxProps>(
 )
 
 export const DesktopMenu: FC<{}> = () => {
-  const goToCoaching = usePushToPage('coaching')
+  // const goToCoaching = usePushToPage('coaching')
 
   return (
     <Wrapper>
@@ -29,13 +29,18 @@ export const DesktopMenu: FC<{}> = () => {
           </Box>
         )}
         <Box sx={{ marginRight: '24px' }}>
-          <NavButton onClick={goToCoaching}>
+          <NavButton
+            component={NavLink}
+            to={"/coaching"}
+          >
             Coaching
           </NavButton>
         </Box>
       </Box>
       <Box>
         <Button
+          component={NavLink}
+          to={"/client-area"}
           variant="outlined"
         >
           <Typography>Client area</Typography>

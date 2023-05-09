@@ -9,8 +9,6 @@ import { mainTheme } from './styles/mainTheme'
 import { routesConfig } from '@app/routersConfig'
 import { RoutePage } from '@pages/routePage'
 
-import { Layout404Component } from '@widgets/layout/ui/404LayoutComponent'
-
 import '@fontsource/fugaz-one'
 import '@fontsource/poppins'
 
@@ -33,9 +31,6 @@ export const App = () => {
               <RoutePage alias={v.alias} title={v.title}/>
             }/>,
           )}
-          <Route key="notfound" path={'*'} element={
-            <Layout404Component alias={'notfound'} title={'404 page'}/>}
-          />
         </Routes>
       </Box>
     </ThemeProvider>

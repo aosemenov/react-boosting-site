@@ -1,11 +1,18 @@
 import React, { FC } from 'react'
 
-import { Box, Grid } from '@mui/material'
-import { BigBoostIcon } from '@shared/ui/icons/BigBoostIcon'
-import { mainTheme } from '@app/styles/mainTheme'
-import { AuthForm } from '@widgets/authForm'
+import styled from '@mui/material/styles/styled'
 
-export const AuthComponent: FC<any> = () => {
+import { Box, BoxProps, Grid, Typography } from '@mui/material'
+import { BigBoostIcon } from '@shared/ui/icons/BigBoostIcon'
+import { routesConfig } from '@app/routersConfig'
+import { Route, Routes } from 'react-router-dom'
+import { RoutePage } from '@pages/routePage'
+import { RegisterForm } from '@widgets/registerForm'
+import { mainTheme } from '@app/styles/mainTheme'
+
+export const RegisterComponent: FC<any> = (props) => {
+  const { children } = props;
+
   return (
     <Box
       sx={{
@@ -47,7 +54,7 @@ export const AuthComponent: FC<any> = () => {
               <BigBoostIcon />
             </Box>
           </Box>
-          <AuthForm />
+          <RegisterForm />
         </Grid>
         <Grid
           xs={12}

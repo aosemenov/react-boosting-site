@@ -22,7 +22,7 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.3",
     "@mui/x-date-pickers": "^5.0.1",
-    "axios": "^0.27.2",
+    "axios": "^1.4.0",
     "compose-function": "^3.0.3",
     "copy-webpack-plugin": "^11.0.0",
     "dayjs": "^1.11.5",
@@ -33,6 +33,7 @@
     "react-helmet": "^6.1.0",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.2.1",
+    "simplebar-react": "^3.2.4",
     "swiper": "^9.2.0"
   },
   "devDependencies": {

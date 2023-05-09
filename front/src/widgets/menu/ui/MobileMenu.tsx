@@ -26,6 +26,8 @@ export const StyledDrawer = styled(Drawer)<any>(
       background: theme.palette.common.white,
     },
     '.menu-mobile': {
+      display: 'flex',
+      flexDirection: 'column',
       '&__item': {
         marginBottom: '12px',
         '&:last-of-type': {
@@ -66,7 +68,7 @@ export const MobileMenu: FC<{}> = () => {
             Coaching
           </Typography>
           <Typography className="menu-mobile__item" variant='menu1'>
-            ClientArea
+            Client Area
           </Typography>
           <Typography className="menu-mobile__item" variant='menu1'>
             Contacts
