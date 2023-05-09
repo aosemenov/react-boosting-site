@@ -20,8 +20,6 @@ class AccountController extends Controller
 
     public function getAccountsVr()
     {
-        dd(Auth::user());
-
         $accounts = Account::select(self::SELECTED_FIELD)
             ->where('type', AccountType::getVrType()->getId())
             ->where('active', true)
