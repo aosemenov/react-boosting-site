@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\LoginUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use Auth;
 use Hash;
@@ -50,25 +51,26 @@ class UserController extends Controller
         ]);
     }
 
-    public function updateUser(Request $request, $id)
+    public function updateUser(UpdateUserRequest $request)
     {
-        return $this->success(['message' => 'Успешно обновлено.']);
+        $data = $request->validated();
+        $user = Auth::user();
+        foreach ($data as $key => $field) {
+            if (!empty($field)) {
+                $user->{$key} = $field;
+            }
+        }
+        $user->save();
+
+        return $this->success([
+            'message' => 'Данные успешно обновлены.',
+            'user' => $user,
+        ]);
     }
 
-    public function getUser(Request $request, $id)
+    public function getUser(Request $request)
     {
-        $user = User::select(self::DEFAULT_SELECT)
-            ->where('id', $id)
-            ->where('active', true)
-            ->select()
-            ->first();
-
-        if ($user) {
-            return $this->success($user->toArray());
-        } else {
-            return $this->error(404, 'Пользователь не найден');
-        }
-
+        return $this->success(Auth::user()->toArray());
     }
 
     public function getListUsers()

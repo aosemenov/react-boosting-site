@@ -9,7 +9,6 @@ class CreateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|integer',
             'comment' => 'string|nullable',
             'offer_id' => 'integer|nullable',
             'offer_type' => 'required|string',

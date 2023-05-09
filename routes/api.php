@@ -31,18 +31,18 @@ Route::middleware('json.response')->group(function() {
 
 
     Route::post('/order/create', [OrderController::class, 'createOrder'])->middleware('auth:sanctum');
-    Route::post('/order/{id}', [OrderController::class, 'updateOrder'])->middleware('auth:sanctum');
-    Route::get('/order/{id}', [OrderController::class, 'getOrder'])->middleware('auth:sanctum');
+    Route::post('/order/update/{id}', [OrderController::class, 'updateOrder'])->middleware('auth:sanctum');
+    Route::get('/order/get/{id}', [OrderController::class, 'getOrder'])->middleware('auth:sanctum');
 
-    Route::get('/orders/{user_id}', [OrderController::class, 'getListOrders'])->middleware('auth:sanctum');
+    Route::get('/orders/list', [OrderController::class, 'getListOrders'])->middleware('auth:sanctum');
 
-    Route::post('/payment/{order_id}', [PaymentController::class, 'payOrder'])->middleware('auth:sanctum');
-    Route::get('/payment/{order_id}', [PaymentController::class, 'getPayOrder'])->middleware('auth:sanctum');
+    Route::post('/payment/get-link/{order_id}', [PaymentController::class, 'payOrder'])->middleware('auth:sanctum');
+    Route::get('/payment/get-status/{order_id}', [PaymentController::class, 'getPayOrder'])->middleware('auth:sanctum');
 
 
     Route::post('/user/create', [UserController::class, 'createUser']);
-    Route::post('/user/update/{id}', [UserController::class, 'updateUser'])->middleware('auth:sanctum');
-    Route::get('/user/get/{id}', [UserController::class, 'getUser'])->middleware('auth:sanctum');
+    Route::post('/user/update', [UserController::class, 'updateUser'])->middleware('auth:sanctum');
+    Route::get('/user/get', [UserController::class, 'getUser'])->middleware('auth:sanctum');
     Route::post('/user/login', [UserController::class, 'login']);
 
     Route::get('/accounts/vr', [AccountController::class, 'getAccountsVr']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Order\CreateOrderRequest;
+use App\Http\Requests\Order\GetOrderListRequest;
 use App\Models\Account;
 use App\Models\BoostCs;
 use App\Models\BoostVr;
@@ -26,6 +27,16 @@ class OrderController extends Controller
     private const DESCRIPTION_BOOST = "Это текст для оплаты заказов. Устанавливается из кода";
     private const DEFAULT_CURRENCY = "RUB";
 
+    private const DEFAULT_SELECT = [
+        'id',
+        'user_id',
+        'offer_id',
+        'offer_type',
+        'total_sum',
+        'status',
+        'comment',
+    ];
+
     /**
      * @param CreateOrderRequest $request
      * @return Application|Response|ResponseFactory
@@ -36,19 +47,19 @@ class OrderController extends Controller
             return $this->error(400, "Пользователь не авторизован");
         }
         $data = $request->toArray();
-
+        $user = Auth::user();
         $order = new Order();
 
         $offer = $this->createOffer($data);
         if ($offer) {
-            $order->user_id = $data['user_id'];
+            $order->user_id = $user->id;
             $order->offer_id = $offer['id'];
             $order->offer_type = OfferType::getTypes($data['offer_type'])->getId();
             //TODO: Добавить скидки
 
             $order->total_sum = $offer['sum'];
             $order->status = OrderStatus::getWaitStatus()->getId();
-            $order->comment = $data['comment'];
+            $order->comment = $data['comment'] ?? "";
 
             $kassa = new YooKassaApi();
 
@@ -93,10 +104,9 @@ class OrderController extends Controller
 
     public function getOrder(int $id)
     {
-        $order = Order::select(['id', 'user_id', 'offer_id', 'offer_type', 'total_sum', 'status', 'comment'])
+        $order = Order::select(self::DEFAULT_SELECT)
                     ->where('id', $id)
                     ->where('active', true)
-                    ->limit(1)
                     ->first();
 
         if ($order) {
@@ -106,12 +116,13 @@ class OrderController extends Controller
         }
     }
 
-    public function getListOrders(int $user_id)
+    public function getListOrders(GetOrderListRequest $request)
     {
-        $orders = Order::select(['id', 'user_id', 'offer_id', 'offer_type', 'total_sum', 'status', 'comment'])
-            ->where('user_id', $user_id)
+        $user = Auth::user();
+        $orders = Order::select(self::DEFAULT_SELECT)
+            ->where('user_id', $user->id)
             ->where('active', true)
-            ->limit(1)
+            ->limit(100)
             ->get();
 
         if ($orders) {

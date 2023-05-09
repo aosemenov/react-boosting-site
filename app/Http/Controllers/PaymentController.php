@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\Yookassa;
+use Auth;
 use Exception;
 use Fiks\YooKassa\YooKassaApi;
 use Illuminate\Foundation\Http\FormRequest;
@@ -22,21 +23,19 @@ class PaymentController extends Controller
     public function payOrder(PayOrderRequest $request, int $order_id)
     {
         $request->validated();
-        if (!\Auth::check()) {
-            return $this->error(400, 'Вы не авторизованы или у вас нет доступа к этому заказу');
-        }
+        $user = Auth::user();
 
         $order = Order::select(['payment_id', 'user_id', 'total_sum'])
             ->where('id', $order_id)
             ->where('active', true)
-            ->where('user_id', $request->user()->id)
+            ->where('user_id', $user->id)
             ->first();
 
         if (isset($order)) {
             $payment = Yookassa::select(['paid', 'payment_link'])
                 ->where('id', $order->payment_id)
                 ->first();
-            if ($payment->paid) {
+            if (isset($payment->paid) && $payment->paid) {
                 return $this->success(['message' => "Заказ уже оплачен!"]);
             } elseif (isset($payment->payment_link)) {
                 return $this->success([
@@ -69,16 +68,25 @@ class PaymentController extends Controller
         }
     }
 
-    public function getPayOrder(FormRequest $request, int $order_id)
+    public function getPayOrder(PayOrderRequest $request, int $order_id)
     {
-        $order = Order::select(['payment_id'])->where('id', $order_id)->where('active', true)->first();
+        $order = Order::select(['id', 'payment_id', 'active'])
+            ->where('id', $order_id)
+            ->where('active', true)
+            ->first();
 
-        if (!$order->payment_id) {
-            return $this->success(['message' => "Оплата не найдена"]);
+        if (empty($order)) {
+            return $this->error(404, "Заказ не найден");
         }
 
-        $payment = Payment::where('id', $order->payment_id)->first();
-        if ($payment && $payment->paid) {
+        if (empty($order->payment_id)) {
+            return $this->error(404, "Оплата не найдена");
+        }
+
+        $payment = Yookassa::select(['id', 'paid'])
+            ->where('id', $order->payment_id)
+            ->first();
+        if (isset($payment->paid) && $payment->paid) {
             return $this->success(['message' => "Заказ оплачен"]);
         } else {
             return $this->success(['message' => "Заказ не оплачен"]);
