@@ -9,30 +9,35 @@ import { mainTheme } from './styles/mainTheme'
 import { routesConfig } from '@app/routersConfig'
 import { RoutePage } from '@pages/routePage'
 
+import { Provider } from 'react-redux';
+
 import '@fontsource/fugaz-one'
 import '@fontsource/poppins'
+import { store } from '@shared/store'
 
 export const App = () => {
   return (
-    <ThemeProvider theme={mainTheme}>
-      <CssBaseline/>
-      <Box
-        component="main"
-        sx={{
-          display: 'flex',
-          overflowX: 'hidden',
-          height: '100%',
-          width: '100%',
-        }}
-      >
-        <Routes>
-          {routesConfig && routesConfig.map(v =>
-            <Route key={v.alias} path={v.path} element={
-              <RoutePage alias={v.alias} title={v.title}/>
-            }/>,
-          )}
-        </Routes>
-      </Box>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={mainTheme}>
+        <CssBaseline/>
+        <Box
+          component="main"
+          sx={{
+            display: 'flex',
+            overflowX: 'hidden',
+            height: '100%',
+            width: '100%',
+          }}
+        >
+          <Routes>
+            {routesConfig && routesConfig.map(v =>
+              <Route key={v.alias} path={v.path} element={
+                <RoutePage alias={v.alias} title={v.title}/>
+              }/>,
+            )}
+          </Routes>
+        </Box>
+      </ThemeProvider>
+    </Provider>
   )
 }

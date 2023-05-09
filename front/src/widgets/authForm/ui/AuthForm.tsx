@@ -1,10 +1,32 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { CustomTextField } from '@shared/ui/components/CustomTextField'
 import { paths } from '@app/paths/paths'
+import { IUserAuthorization } from '@shared/api/authUser/types'
+import { useController, useForm } from 'react-hook-form'
+import { fetchAuthUser } from '@shared/store/authUser'
+import { useAppDispatch } from '@shared/hooks/store'
 
 export const AuthForm: FC<{}> = () => {
+  const dispatch = useAppDispatch()
+
+  const { handleSubmit, control } = useForm<IUserAuthorization>({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
+
+  const { field: passwordProps } = useController({ name: "password", control })
+  const { field: emailProps } = useController({ name: "email", control })
+
+  const onSubmit = useCallback((formData: IUserAuthorization) => {
+    dispatch(fetchAuthUser(formData))
+  }, [])
+
   return (
     <>
       <Box
@@ -46,14 +68,15 @@ export const AuthForm: FC<{}> = () => {
                 </Link>
               </Typography>
             </Stack>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing={3}>
                 <CustomTextField
                   fullWidth
                   required
-                  label="Login"
-                  name="login"
+                  label="Email"
+                  name="email"
                   variant="outlined"
+                  InputProps={emailProps}
                 />
                 <CustomTextField
                   fullWidth
@@ -62,6 +85,7 @@ export const AuthForm: FC<{}> = () => {
                   name="password"
                   type="password"
                   variant="outlined"
+                  InputProps={passwordProps}
                 />
               </Stack>
               <Button

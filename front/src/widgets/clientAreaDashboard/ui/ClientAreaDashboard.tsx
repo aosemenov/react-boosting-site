@@ -10,6 +10,7 @@ import { RegisterComponent } from '@widgets/register'
 import { AuthComponent } from '@widgets/auth'
 import { RoutePage } from '@pages/routePage'
 import { OrdersList } from '@widgets/ordersList'
+import { withAuthGuard } from '@shared/hocs/withAuthComp'
 
 const Wrapper = styled(Box)<BoxProps>(({ theme }) => ({
   display: 'flex',
@@ -17,17 +18,8 @@ const Wrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
 }))
 
-export const ClientAreaDashboard: FC<{}> = () => {
+export const ClientAreaDashboard: FC<{}> = withAuthGuard(() => {
   // Логика формы авторизации страницы...
-
-  if (false) {
-    return (
-      <Navigate
-        to={paths.clientArea.dashboard.auth}
-        replace
-      />
-    )
-  }
 
   return (
     <Wrapper>
@@ -40,4 +32,4 @@ export const ClientAreaDashboard: FC<{}> = () => {
       </DashboardLayout>
     </Wrapper>
   )
-}
+})
