@@ -1,5 +1,16 @@
-import { TPaths } from '@app/paths/types/paths'
-
 export const paths = {
-  root: '/',
-} as TPaths
+  clientArea: {
+    root: '/',
+    orders: '/orders',
+    settings: '/settings',
+    dashboard: {
+      overview: '/client-area',
+      orders: '/client-area/orders',
+      settings: '/client-area/settings',
+      auth: '/client-area/auth',
+      register: '/client-area/register',
+    },
+    auth: '/auth',
+    register: '/register',
+  }
+} as any

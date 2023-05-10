@@ -66,7 +66,7 @@ export const MobileMenu: FC<{}> = () => {
             Coaching
           </Typography>
           <Typography className="menu-mobile__item" variant='menu1'>
-            ClientArea
+            Client Area
           </Typography>
           <Typography className="menu-mobile__item" variant='menu1'>
             Contacts
