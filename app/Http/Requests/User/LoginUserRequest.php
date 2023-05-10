@@ -9,7 +9,7 @@ class LoginUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'nullable|email:rfc,dns',
+            'email' => 'required|email:rfc,dns',
             'nickname' => 'nullable|string',
             'password' => 'required|string',
         ];
