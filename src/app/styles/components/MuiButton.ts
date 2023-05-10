@@ -51,7 +51,7 @@ export const MuiButton = {
       position: 'relative',
       display: 'inline-flex',
       justifyContent: 'center',
-      padding: '8px 12px',
+      padding: '8px 16px',
       textDecoration: 'none',
       whiteSpace: 'nowrap',
       borderRadius: '28px',
@@ -91,14 +91,20 @@ export const MuiButton = {
           },
         '.MuiTypography-root': {
           color: '#F33041',
-        }
+        },
+        [`.${buttonClasses.startIcon}`]: {
+          color: '#F33041',
+        },
       },
       ['.MuiTypography-root']: {
         position: 'relative',
         zIndex: '1',
         fontWeight: 700,
         color: 'white',
-      }
+      },
+      [`.${buttonClasses.startIcon}`]: {
+        color: 'white',
+      },
     },
     cancel: {
       color: '#333333',

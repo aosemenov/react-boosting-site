@@ -2,6 +2,8 @@ import { createTheme, Theme, ThemeOptions } from '@mui/material/styles'
 import { MuiTypography } from '@app/styles/components/MuiTypography'
 import { MuiButton } from './components/MuiButton'
 import { MuiRating } from '@app/styles/components/MuiRating'
+import { MuiSvgIcon } from '@app/styles/components/MuiSvgIcon'
+import { MuiOutlinedInput } from '@app/styles/components/MuiOutlinedInput'
 
 export const mainTheme: Theme = createTheme(<ThemeOptions>{
   breakpoints: {
@@ -120,6 +122,8 @@ export const mainTheme: Theme = createTheme(<ThemeOptions>{
     MuiButton,
     MuiTypography,
     MuiRating,
+    MuiSvgIcon,
+    MuiOutlinedInput,
   },
 })
 

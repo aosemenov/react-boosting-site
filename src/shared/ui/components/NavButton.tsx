@@ -1,7 +1,7 @@
-import MuiButton, { ButtonProps } from '@mui/material/Button'
+import MuiButton from '@mui/material/Button'
 import styled from '@mui/material/styles/styled'
 
-export const NavButton = styled(MuiButton)<ButtonProps>(({ theme }) => ({
+export const NavButton = styled(MuiButton)<any>(({ theme }) => ({
   position: 'relative',
   display: 'inline-flex',
   padding: 0,
