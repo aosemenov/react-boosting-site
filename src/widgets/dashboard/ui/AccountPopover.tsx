@@ -1,5 +1,7 @@
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material'
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
+import { useAppDispatch } from '@shared/hooks/store'
+import { actions, signOut } from '@shared/store/auth'
 
 interface IAccountPopover {
   anchorEl: any,
@@ -8,7 +10,12 @@ interface IAccountPopover {
 }
 
 export const AccountPopover: FC<IAccountPopover> = (props) => {
+  const dispatch = useAppDispatch()
   const { anchorEl, onClose, open } = props
+
+  const handleSignOut = () => {
+    dispatch(signOut())
+  }
 
   return (
     <Popover
@@ -48,7 +55,7 @@ export const AccountPopover: FC<IAccountPopover> = (props) => {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem onClick={handleSignOut}>
           Sign out
         </MenuItem>
       </MenuList>

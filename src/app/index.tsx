@@ -14,6 +14,9 @@ import { Provider } from 'react-redux';
 import '@fontsource/fugaz-one'
 import '@fontsource/poppins'
 import { store } from '@shared/store'
+import { paths } from '@app/paths/paths'
+import { RegisterComponent } from '@widgets/register'
+import { AuthComponent } from '@widgets/auth'
 
 export const App = () => {
   return (

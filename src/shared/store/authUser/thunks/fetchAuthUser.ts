@@ -7,7 +7,6 @@ import { auth } from '@shared/store/auth/thunks/auth'
 
 export const fetchAuthUser = (payload: IUserAuthorizationRequest): AppThunk => async (dispatch) => {
   dispatch(actions.authStarted())
-
   try {
     const response = await postAuthUser(payload)
     if (!response) {

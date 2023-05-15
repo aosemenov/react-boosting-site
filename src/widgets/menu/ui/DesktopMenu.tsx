@@ -7,6 +7,9 @@ import { menuItemPopoverModel } from '@widgets/menu/model/menuPopoverModel'
 import { MenuItemPopover } from '@widgets/menu/ui/MenuItemPopover'
 import { NavButton } from '@shared/ui/components/NavButton'
 import { NavLink } from 'react-router-dom'
+import { useAuthLink } from '@shared/hooks/useAuth'
+import { paths } from '@app/paths/paths'
+import { useAppSelector } from '@shared/hooks/store'
 
 const Wrapper = styled(Box)<BoxProps>(
   ({ theme }) => ({
@@ -18,7 +21,8 @@ const Wrapper = styled(Box)<BoxProps>(
 )
 
 export const DesktopMenu: FC<{}> = () => {
-  // const goToCoaching = usePushToPage('coaching')
+  const { isAuthorized } = useAppSelector(state => state.auth)
+  const { link: clientAreaPath } = useAuthLink(paths.clientArea.dashboard.overview)
 
   return (
     <Wrapper>
@@ -40,7 +44,7 @@ export const DesktopMenu: FC<{}> = () => {
       <Box>
         <Button
           component={NavLink}
-          to={"/client-area"}
+          to={clientAreaPath}
           variant="outlined"
         >
           <Typography>Client area</Typography>
