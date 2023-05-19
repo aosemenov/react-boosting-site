@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IError } from '../types';
+import { ICookiesToken, IError } from '../types'
+import Cookies from 'universal-cookie'
 
 
 export interface IAuthState {
@@ -9,12 +10,17 @@ export interface IAuthState {
   accessToken: string | undefined
 }
 
+const cookies = new Cookies()
+const tokenByCookies = cookies.get(ICookiesToken.key)
+
 const initialState: IAuthState = {
-  isAuthorized: false,
+  isAuthorized: !!tokenByCookies,
   isAuthorizing: false,
   error: undefined,
-  accessToken: undefined
+  accessToken: tokenByCookies
 };
+
+console.log(initialState)
 
 export const authSlice = createSlice({
   name: 'auth',

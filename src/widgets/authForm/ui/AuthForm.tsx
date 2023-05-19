@@ -1,5 +1,5 @@
-import React, { FC, useCallback, useEffect, useLayoutEffect } from 'react'
-import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material'
+import React, { FC, useCallback } from 'react'
+import { Box, Button, Link, Stack, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { CustomTextField } from '@shared/ui/components/CustomTextField'
 import { paths } from '@app/paths/paths'
@@ -7,17 +7,10 @@ import { IUserAuthorization } from '@shared/api/authUser/types'
 import { useController, useForm } from 'react-hook-form'
 import { fetchAuthUser } from '@shared/store/authUser'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/store'
-import { ICookiesToken } from '@shared/store/types'
-import Cookies from 'universal-cookie'
-import { usePushToPath } from '@shared/hooks/useToPage'
 
 export const AuthForm: FC<{}> = () => {
-  const goToDashboard = usePushToPath(paths.clientArea.dashboard.overview)
-  const cookies = new Cookies()
   const dispatch = useAppDispatch()
   const { error } = useAppSelector(state => state.authUserStore)
-  const { isAuthorized } = useAppSelector(state => state.auth)
-  const tokenByCookies = cookies.get(ICookiesToken.key)
 
   const { handleSubmit, control } = useForm<IUserAuthorization>({
     mode: 'onSubmit',
@@ -27,12 +20,6 @@ export const AuthForm: FC<{}> = () => {
       password: '',
     },
   })
-
-  useEffect(() => {
-    if (isAuthorized || tokenByCookies) {
-      goToDashboard()
-    }
-  }, [isAuthorized])
 
   const { field: passwordProps } = useController({ name: 'password', control })
   const { field: emailProps } = useController({ name: 'email', control })
@@ -91,6 +78,8 @@ export const AuthForm: FC<{}> = () => {
                   name="email"
                   variant="outlined"
                   InputProps={emailProps}
+                  error={error &&  !!error.messages?.email}
+                  helperText={error && error.messages?.email}
                 />
                 <CustomTextField
                   fullWidth
@@ -100,9 +89,11 @@ export const AuthForm: FC<{}> = () => {
                   type="password"
                   variant="outlined"
                   InputProps={passwordProps}
+                  error={error && !!error.messages?.password}
+                  helperText={error && error.messages?.password}
                 />
               </Stack>
-              {error &&
+              {error && error.message &&
                   <Box sx={{ mt: '12px' }}>
                       <Typography variant={'body2'} color={'error.main'}>
                         {error.message}

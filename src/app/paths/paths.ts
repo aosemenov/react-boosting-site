@@ -12,5 +12,8 @@ export const paths = {
     },
     auth: '/auth',
     register: '/register',
+  },
+  products: {
+    coaching: 'coaching',
   }
 } as any

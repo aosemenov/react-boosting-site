@@ -18,7 +18,7 @@ const Wrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
 }))
 
-export const ClientAreaDashboard: FC<{}> = withAuthGuard(() => {
+export const ClientAreaDashboard: FC<{}> = () => {
   // Логика формы авторизации страницы...
 
   return (
@@ -28,8 +28,9 @@ export const ClientAreaDashboard: FC<{}> = withAuthGuard(() => {
           <Route key={'overview'} path={paths.clientArea.root} element={<OrdersList />} />
           <Route key={'orders'} path={paths.clientArea.orders} element={<OrdersList />} />
           <Route key={'settings'} path={paths.clientArea.settings} element={null} />
+          <Route key={'other'} path={'*'} element={<Navigate to={paths.clientArea.dashboard.overview} />} />
         </Routes>
       </DashboardLayout>
     </Wrapper>
   )
-})
+}

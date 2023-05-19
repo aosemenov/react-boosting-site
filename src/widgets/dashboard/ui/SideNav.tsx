@@ -71,7 +71,7 @@ export const SideNav: FC<ISideNav> = (props) => {
             }}
           >
             {items.map((item) => {
-              const active = item.path ? (location.pathname === item.path) : false
+              const active = item.path ? (location.pathname === item.path || location.pathname === (item.path + '/')) : false
               return (
                 <SideNavItem
                   active={active}

@@ -1,16 +1,12 @@
-import { useCallback } from 'react'
 import { useAppSelector } from '@shared/hooks/store'
-import { ICookiesToken } from '@shared/store/types'
-import Cookies from 'universal-cookie'
+import { paths } from '@app/paths/paths'
 
-export function useAuth() {
-  const cookies = new Cookies()
-  const { isAuthorized, accessToken } = useAppSelector(state => state.auth)
-  const tokenByCookies = cookies.get(ICookiesToken.key)
+export function useAuthLink(path: string) {
+  const { isAuthorized } = useAppSelector(state => state.auth)
 
-  const isAuth = !!tokenByCookies
+  const link = isAuthorized ? path : paths.clientArea.dashboard.auth
 
   return {
-    isAuth,
+    link,
   }
 }

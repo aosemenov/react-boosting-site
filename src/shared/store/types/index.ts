@@ -14,7 +14,29 @@ export enum IErrorCode {
 
 export type IError = {
   code: IErrorCode,
-  message?: string,
+  message: string | undefined,
+  messages: Record<string, string> | undefined
+}
+
+export type IUser = {
+  "id": number,
+  "role_id"?: number,
+  "name": string,
+  "email": string,
+  "avatar"?: string,
+  "email_verified_at"?: string | null,
+  "settings"?: {
+    "locale": string
+  },
+  "created_at"?: string,
+  "updated_at"?: string,
+  "active"?: number,
+  "nickname": string,
+  "first_name"?: string | null,
+  "last_name"?: string | null,
+  "telegram_link"?: string | null,
+  "telegram_id"?: string | null,
+  "vk_link"?: string | null,
 }
 
 /** Cookies token */
