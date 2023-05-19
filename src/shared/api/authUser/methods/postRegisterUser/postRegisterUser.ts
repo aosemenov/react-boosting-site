@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios'
 import { IRequestData, IResponseData } from './index'
 import { api, IResponse } from '@shared/api'
 
-export const postRegisterUser = async (payload: IRequestData): Promise<IResponse<IResponseData>> => {
+export const postRegisterUser = async (data: IRequestData): Promise<IResponse<IResponseData>> => {
 
   const requestConfig: AxiosRequestConfig = {
     method: 'POST',
@@ -11,7 +11,7 @@ export const postRegisterUser = async (payload: IRequestData): Promise<IResponse
       "Content-Type": "application/json"
     },
     data: {
-      payload
+      ...data
     }
   }
 

@@ -78,6 +78,8 @@ export const AuthForm: FC<{}> = () => {
                   name="email"
                   variant="outlined"
                   InputProps={emailProps}
+                  error={error &&  !!error.messages?.email}
+                  helperText={error && error.messages?.email}
                 />
                 <CustomTextField
                   fullWidth
@@ -87,6 +89,8 @@ export const AuthForm: FC<{}> = () => {
                   type="password"
                   variant="outlined"
                   InputProps={passwordProps}
+                  error={error && !!error.messages?.password}
+                  helperText={error && error.messages?.password}
                 />
               </Stack>
               {error && error.message &&

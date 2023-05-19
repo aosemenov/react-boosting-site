@@ -3,12 +3,14 @@ import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { CustomTextField } from '@shared/ui/components/CustomTextField'
 import { paths } from '@app/paths/paths'
-import { useAppDispatch } from '@shared/hooks/store'
+import { useAppDispatch, useAppSelector } from '@shared/hooks/store'
 import { useController, useForm } from 'react-hook-form'
-import { IUserRegister } from '@shared/api/registerUser/types'
+import { fetchRegisterUser } from '@shared/store/authUser/thunks/fetchRegisterUser'
+import { IUserRegister } from '@shared/api/authUser/types'
 
 export const RegisterForm: FC<{}> = () => {
   const dispatch = useAppDispatch()
+  const { error } = useAppSelector(state => state.authUserStore)
 
   const { handleSubmit, control } = useForm<IUserRegister>({
     mode: 'onSubmit',
@@ -78,6 +80,8 @@ export const RegisterForm: FC<{}> = () => {
                   name="nickname"
                   variant="outlined"
                   InputProps={nicknameProps}
+                  error={error && !!error.messages?.nickname}
+                  helperText={error && error.messages?.nickname}
                 />
                 <CustomTextField
                   fullWidth
@@ -116,11 +120,14 @@ export const RegisterForm: FC<{}> = () => {
                 />
                 <CustomTextField
                   fullWidth
+                  required
                   label="Email Address"
                   name="email"
                   type="email"
                   variant="outlined"
                   InputProps={emailProps}
+                  error={error &&  !!error.messages?.email}
+                  helperText={error && error.messages?.email}
                 />
                 <CustomTextField
                   fullWidth
@@ -130,8 +137,17 @@ export const RegisterForm: FC<{}> = () => {
                   type="password"
                   variant="outlined"
                   InputProps={passwordProps}
+                  error={error &&  !!error.messages?.password}
+                  helperText={error && error.messages?.password}
                 />
               </Stack>
+              {error && error.message &&
+                  <Box sx={{ mt: '12px' }}>
+                      <Typography variant={'body2'} color={'error.main'}>
+                        {error.message}
+                      </Typography>
+                  </Box>
+              }
               <Button
                 fullWidth
                 size="large"

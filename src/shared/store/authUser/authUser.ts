@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IError } from '../types';
+import { IError, IUser } from '../types'
 
 
 export interface IAuthState {
   isAuthorized: boolean,
   isAuthorizing: boolean,
   error: IError | undefined,
+  userProfile: IUser | null,
 }
 
 const initialState: IAuthState = {
   isAuthorized: false,
   isAuthorizing: false,
   error: undefined,
+  userProfile: null,
 };
 
 export const AuthUserSlice = createSlice({
@@ -23,9 +25,16 @@ export const AuthUserSlice = createSlice({
       state.error = undefined
     },
 
-    authSuccess: (state, { payload }: PayloadAction<boolean>) => {
+    authSuccess: (state, { payload }: PayloadAction<IUser>) => {
       state.isAuthorizing = false
-      state.isAuthorized = payload
+      state.isAuthorized = true
+      state.userProfile = payload
+    },
+
+    registerSuccess: (state, { payload }: PayloadAction<IUser>) => {
+      state.isAuthorizing = false
+      state.isAuthorized = true
+      state.userProfile = payload
     },
 
     authFailed: (state, { payload }: PayloadAction<IError>) => {

@@ -1,14 +1,14 @@
 import { AppThunk } from '@shared/store'
 import { IErrorCode } from '@shared/store/types'
-import { IUserAuthorizationRequest } from '@shared/api/authUser/types'
 import { actions } from '@shared/store/authUser'
-import { postAuthUser } from '@shared/api/authUser/methods/postAuthUser'
 import { auth } from '@shared/store/auth/thunks/auth'
+import { postRegisterUser } from '@shared/api/authUser/methods/postRegisterUser'
+import { IUserRegisterRequest } from '@shared/api/authUser/types'
 
-export const fetchAuthUser = (payload: IUserAuthorizationRequest): AppThunk => async (dispatch) => {
+export const fetchRegisterUser = (payload: IUserRegisterRequest): AppThunk => async (dispatch) => {
   dispatch(actions.authStarted())
   try {
-    const response = await postAuthUser(payload)
+    const response = await postRegisterUser(payload)
     if (!response) {
       dispatch(actions.authFailed({
         code: IErrorCode.RESPONSE,
@@ -21,7 +21,7 @@ export const fetchAuthUser = (payload: IUserAuthorizationRequest): AppThunk => a
       return
     }
     dispatch(auth(response.payload.token))
-    dispatch(actions.authSuccess(response.payload.user))
+    dispatch(actions.registerSuccess(response.payload.user))
     return
 
   } catch (error) {
